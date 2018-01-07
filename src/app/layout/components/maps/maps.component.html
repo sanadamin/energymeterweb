@@ -1,0 +1,6 @@
+<div>
+    <agm-map class="mapMArker" [latitude]="lat" [longitude]="lng">
+        <agm-marker class="mapMarker" *ngFor="let item of markers" [(latitude)]="item.latt" [(longitude)]="item.longg" label="sanad">
+        </agm-marker>
+    </agm-map>
+</div>
