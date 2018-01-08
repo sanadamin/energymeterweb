@@ -31,6 +31,6 @@ import {AgmCoreModule,MarkerManager,GoogleMapsAPIWrapper} from '@agm/core'
         ChatComponent,
         MapsComponent
     ],
-    providers: [MarkerManager,GoogleMapsAPIWrapper,ServerService]
+    providers: [MarkerManager,GoogleMapsAPIWrapper]
 })
 export class DashboardModule {}

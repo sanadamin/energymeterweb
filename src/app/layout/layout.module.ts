@@ -1,3 +1,6 @@
+import { ServerService } from './dashboard/Server.Service';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,6 +20,8 @@ import { HeaderComponent } from './components/header/header.component';
         CommonModule,
         LayoutRoutingModule,
         FormsModule,
+        HttpModule,
+        HttpClientModule,
         TranslateModule,
         MatAutocompleteModule,
         MatFormFieldModule,
@@ -25,6 +30,7 @@ import { HeaderComponent } from './components/header/header.component';
         NgbDropdownModule.forRoot(),
 
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, ]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent ],
+    providers: [ServerService]
 })
 export class LayoutModule {}
