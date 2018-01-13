@@ -235,6 +235,13 @@ taskApproval : number;
         
         
     }
+    public chartClicked(e: any): void {
+        // console.log(e);
+    }
+
+    public chartHovered(e: any): void {
+        // console.log(e);
+    }
     public barChartOptions: any = {
         scaleShowVerticalLines: true,
         responsive: true
