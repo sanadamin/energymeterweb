@@ -14,7 +14,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 export class TasksapprovalComponent implements OnInit {
   animal: string;
   name: string;
-  public data: userData1 = {id:'',username: '',sitename:'',action:''};
+  public data: userData1 = {id:'',username: '',sitename:'',action:'',employee:''};
  displayedColumns = ['id', 'name', 'progress','test', 'color','closing','action'];
  dataSource: MatTableDataSource<UserData>;
  tasks: task[] = [];
@@ -190,5 +190,6 @@ export class DialogOverviewExampleDialog {
    id: string,
    username:string,
    sitename:string,
-   action:string
+   action:string,
+   employee: string
  }
