@@ -17,12 +17,14 @@ export class NewtaskComponent implements OnInit {
   assignedTo:string;
   siteList: string[] =[];
   empList: string[] = [];
+  isLoading = true;
   constructor(private serverService:ServerService,private router:Router) {
     this.serverService.getSiteList().subscribe((res)=>{
       let sitesJson = res.json();
       for (let site of sitesJson){
         this.siteList.push(site['sitename']);
       }
+      this.isLoading = false;
       
     });
   this.serverService.readEmployee().subscribe((res)=>{
