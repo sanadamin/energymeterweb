@@ -12,7 +12,8 @@ import { AuthGuard } from './shared';
 import {HttpModule} from '@angular/http'
 import {MatTableModule} from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material';
-import { MatInputModule,MatAutocompleteModule } from '@angular/material';
+import { MatInputModule,MatAutocompleteModule,
+MatDialogModule } from '@angular/material';
 
 
 // AoT requires an exported function for factories
@@ -29,6 +30,7 @@ export function createTranslateLoader(http: HttpClient) {
         MatInputModule,
         MatFormFieldModule,
         BrowserModule,
+        MatDialogModule,
         BrowserAnimationsModule,
         HttpClientModule,
         HttpModule,

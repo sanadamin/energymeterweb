@@ -5,6 +5,10 @@ import {BrowserModule} from '@angular/platform-browser'
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import {ServerService} from './Server.Service'
+import { ChartsModule as Ng2Charts } from 'ng2-charts';
+
+import { ChartsRoutingModule } from '../charts/charts-routing.module';
+import { ChartsComponent } from '../charts/charts.component';
 import {
     TimelineComponent,
     NotificationComponent,
@@ -20,6 +24,7 @@ import {AgmCoreModule,MarkerManager,GoogleMapsAPIWrapper} from '@agm/core'
         NgbAlertModule.forRoot(),
         DashboardRoutingModule,
         StatModule,
+        Ng2Charts, 
         AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCOb7r8dpHxoxvGFmzZKvIsbP4wPhhb-ro'
     })
@@ -29,7 +34,7 @@ import {AgmCoreModule,MarkerManager,GoogleMapsAPIWrapper} from '@agm/core'
         TimelineComponent,
         NotificationComponent,
         ChatComponent,
-        MapsComponent
+        
     ],
     providers: [MarkerManager,GoogleMapsAPIWrapper]
 })

@@ -1,19 +1,19 @@
-import { ServerService } from './../dashboard/Server.Service';
-import { Component, OnInit, ViewChild,AfterViewInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import { ServerService } from './../dashboard/Server.Service';
+
 
 @Component({
-  selector: 'app-tasks',
-  templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.scss',
-  './tasks.component.css'],
+  selector: 'app-record',
+  templateUrl: './record.component.html',
+  styleUrls: ['./record.component.scss'],
   animations: [routerTransition()]
 })
-export class TasksComponent implements OnInit,AfterViewInit {
-  
+export class RecordComponent implements OnInit {
+ 
 
- displayedColumns = ['id', 'name', 'progress', 'color','test'];
+ displayedColumns = ['id', 'name', 'progress','date', 'color','acktime','closetime','test','actiontaken'];
  dataSource: MatTableDataSource<UserData>;
  tasks: task[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -21,7 +21,7 @@ export class TasksComponent implements OnInit,AfterViewInit {
 
   constructor(private serverService:ServerService) {
     // Create 100 users
-    this.serverService.readTasks().subscribe((res)=>{
+    this.serverService.GetRecord().subscribe((res)=>{
           
             let s = res.json();
             s
@@ -32,7 +32,11 @@ export class TasksComponent implements OnInit,AfterViewInit {
               taskName: i['taskname'],
               taskStaff:i['taskassignedto'],
               taskSite:i['sitename'],
-              taskStartTime:i['taskstarttime']})
+              taskStartTime:i['taskstarttime'],
+              actiontaken:i['description'],
+              taskacktime:i['acknowledgetime'],
+              taskclosetime:i['closingtime'],
+              taskdate:i['taskdate']})
             }
            
     const users: UserData[] = [];
@@ -44,12 +48,16 @@ export class TasksComponent implements OnInit,AfterViewInit {
       this.tasks[j].taskName,
       this.tasks[j].taskSite,
       this.tasks[j].taskStaff,
-      this.tasks[j].taskStartTime)); 
+      this.tasks[j].taskStartTime,
+      this.tasks[j].actiontaken,
+      this.tasks[j].taskacktime,
+      this.tasks[j].taskclosetime,
+      this.tasks[j].taskdate)); 
      j++;}
      // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
         this.dataSource.paginator = this.paginator;
-
+        this.dataSource.sort = this.sort;
         },
         (error)=>{console.log(error)});
     
@@ -72,7 +80,7 @@ export class TasksComponent implements OnInit,AfterViewInit {
  
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.sort = this.sort;
   }
 OnAddTask(){
     console.log('asd');
@@ -92,7 +100,16 @@ OnAddTask(){
 }
 
 /** Builds and returns a new User. */
-function createNewUser(id: number,siteName: string,taskname: string,employee: string,startTime:string): UserData {
+function createNewUser(
+  id: number,
+  siteName: string,
+  taskname: string,
+  employee: string,
+  startTime:string,
+  action:string,
+  acktime:string,
+  closetime:string,
+  date:string): UserData {
   const name =
       NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
       NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
@@ -102,7 +119,11 @@ function createNewUser(id: number,siteName: string,taskname: string,employee: st
     name: taskname,
     progress: siteName,
     color: startTime,
-    test: employee
+    test: employee,
+    actiontaken:action,
+    acktime:acktime,
+    closetime:closetime,
+    date:date
   };
 }
 
@@ -119,11 +140,19 @@ export interface UserData {
   progress: string;
   color: string;
   test: string;
+  actiontaken:string,
+  acktime: string,
+  closetime:string,
+  date:string
 }
 
 interface task{
     taskName: string,
     taskStaff: string,
     taskSite:string,
-    taskStartTime: string
+    taskStartTime: string,
+    actiontaken:string,
+    taskacktime:string,
+    taskclosetime:string,
+    taskdate:string
 }

@@ -1,0 +1,7 @@
+<div class="col-xl-12">
+    <!--<app-maps></app-maps>-->
+    <agm-map class="mapMarker" [latitude]="lat" [longitude]="lng">
+        <agm-marker class="mapMarker" *ngFor="let item of markers" [(latitude)]="item.latt" [(longitude)]="item.longg" [label]="item.empname">
+        </agm-marker>
+    </agm-map>
+</div>

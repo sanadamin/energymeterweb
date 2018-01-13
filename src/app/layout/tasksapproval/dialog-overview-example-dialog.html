@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Hi {{data.name}}</h1>
+<div class="col-xs-12">
+    <p>Site Name: {{data.sitename}}</p>
+    <hr>
+    <p>Employee: {{data.employee}} </p>
+    <mat-form-field>
+        <input class="col-xs-12" matInput [(ngModel)]="data.action">
+    </mat-form-field>
+</div>
+<div>
+    <button class="btn btn-success" (click)="onNoClick()">No Thanks</button>
+    <button class="btn btn-danger" [mat-dialog-close]="data" (click)="onConfirm() ">Confirm</button>
+</div>

@@ -32,11 +32,13 @@ export class ChartsComponent implements OnInit {
 
     // Doughnut
     public doughnutChartLabels: string[] = [
-        'Download Sales',
-        'In-Store Sales',
-        'Mail-Order Sales'
+        'Power',
+        '2G',
+        '3G',
+        '4G',
+        'Microwave'
     ];
-    public doughnutChartData: number[] = [350, 450, 100];
+    public doughnutChartData: number[] = [350, 450, 100,250,500];
     public doughnutChartType: string = 'doughnut';
 
     // Radar

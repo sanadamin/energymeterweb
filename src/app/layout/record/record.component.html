@@ -31,6 +31,10 @@
         </ng-container>
 
         <!-- Color Column -->
+        <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Task Date </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.date | date}} </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="color">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.color}} </mat-cell>
@@ -39,6 +43,20 @@
         <ng-container matColumnDef="test">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Assigned To </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.test}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actiontaken">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Action Taken </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.actiontaken}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="acktime">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> AcK Time </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.acktime}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="closetime">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Close Time </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.closetime}} </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

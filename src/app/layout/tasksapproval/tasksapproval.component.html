@@ -8,6 +8,7 @@
     </mat-form-field>
 </div>
 
+
 <div class="example-container mat-elevation-z8">
 
     <mat-table [dataSource]="dataSource" matSort>
@@ -35,19 +36,25 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.color}} </mat-cell>
         </ng-container>
-
+        <ng-container matColumnDef="closing">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Closing Time </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.closing}} </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="test">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Assigned To </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.test}} </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Action Taken </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.action}} </mat-cell>
+        </ng-container>
+
+
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-
-        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectedRow(row)" style="cursor: pointer">
         </mat-row>
-
     </mat-table>
+
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
-<hr>
-<button (click)="eventClicked()">Add Button</button>
