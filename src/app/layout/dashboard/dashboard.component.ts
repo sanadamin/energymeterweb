@@ -83,7 +83,15 @@ export class DashboardComponent implements OnInit {
                 this.days.today5 = today.getDate().toString();
                  today.setDate(today.getDate() - 1).toString();
                 this.days.today6 = today.getDate().toString();
-                this.barChartLabels = [
+                
+                    console.log(this.days.today+
+                    this.days.today1+
+                    this.days.today2+
+                    this.days.today3+
+                    this.days.today4+
+                    this.days.today5+
+                    this.days.today6)
+                    this.barChartLabels = [
                     this.days.today,
                     this.days.today1,
                     this.days.today2,
@@ -91,13 +99,6 @@ export class DashboardComponent implements OnInit {
                     this.days.today4,
                     this.days.today5,
                     this.days.today6];
-                    // console.log(this.days.today+
-                    // this.days.today1+
-                    // this.days.today2+
-                    // this.days.today3+
-                    // this.days.today4+
-                    // this.days.today5+
-                    // this.days.today6)
                 today = new Date();
                 let todayDay = today.getDate();
                 let todaymonth = today.getMonth();
@@ -152,11 +153,30 @@ export class DashboardComponent implements OnInit {
                 
                 // console.log(this.alarmstat.today1);
             }
-
+        this.barChartLabels = [
+                    this.days.today,
+                    this.days.today1,
+                    this.days.today2,
+                    this.days.today3,
+                    this.days.today4,
+                    this.days.today5,
+                    this.days.today6];
         this.barChartData = [
-        { data: [this.alarmstat.today, this.alarmstat.today1, this.alarmstat.today2,this.alarmstat.today3, this.alarmstat.today4, this.alarmstat.today5, this.alarmstat.today6], label: 'Alarms Number' }
+        { data: [
+            this.alarmstat.today, 
+            this.alarmstat.today1,
+            this.alarmstat.today2,
+            this.alarmstat.today3,
+            this.alarmstat.today4, 
+            this.alarmstat.today5, 
+            this.alarmstat.today6], label: 'Alarms Number' }
     ];
-            this.doughnutChartData = [this.numbers.powernumber, this.numbers.twonumber, this.numbers.threenumber,this.numbers.fournumber,this.numbers.microwavenumber]
+            this.doughnutChartData = [
+                  this.numbers.powernumber,
+                  this.numbers.twonumber,
+                  this.numbers.threenumber,
+                  this.numbers.fournumber,
+                  this.numbers.microwavenumber]
         });
         
         // 
@@ -247,13 +267,13 @@ taskApproval : number;
         responsive: true
     };
     public barChartLabels: string[] = [
-        this.days.today,
-        this.days.today1,
-        this.days.today2,
-        this.days.today3,
-        this.days.today4,
-        this.days.today5,
-        this.days.today6
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7'
     ];
     public barChartType: string = 'bar';
     public barChartLegend: boolean = true;

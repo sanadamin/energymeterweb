@@ -1,3 +1,4 @@
+import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
@@ -16,6 +17,7 @@ export class RecordComponent implements OnInit {
  displayedColumns = ['id', 'name', 'progress','date', 'color','acktime','closetime','test','actiontaken'];
  dataSource: MatTableDataSource<UserData>;
  tasks: task[] = [];
+ ss = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -24,7 +26,7 @@ export class RecordComponent implements OnInit {
     this.serverService.GetRecord().subscribe((res)=>{
           
             let s = res.json();
-            s
+            this.ss = s;
             console.log(s);
             for (let i of s){
          
@@ -54,6 +56,7 @@ export class RecordComponent implements OnInit {
       this.tasks[j].taskclosetime,
       this.tasks[j].taskdate)); 
      j++;}
+     
      // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
         this.dataSource.paginator = this.paginator;
@@ -94,7 +97,7 @@ OnAddTask(){
 
   }
   eventClicked(){
-
+new Angular2Csv(this.ss, 'My Report',{headers: ['taskid','Ack Time','Approved By','Approved Time','Action Taken','Closing Time','Start Time','Date','Employee','Task Category','Task Name','Site Name']});
   }
   
 }
