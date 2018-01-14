@@ -36,7 +36,7 @@ NewTask(sitename:string,taskname:string,taskcat:string,assinedto:string){
 	})	
 }
 UpdateTask(id:string,action:string,username:string){
-	username = 'tests.amin@umniah.com'
+	
 	return this.http.put('http://212.118.13.26/api/v1/taskapproval/updateaction',{
 		"id": id,
 		"description":action,
@@ -45,5 +45,10 @@ UpdateTask(id:string,action:string,username:string){
 }
 GetRecord(){
 	return this.http.get('http://212.118.13.26/api/v1/record');
+}
+authenticateEmployee(username:string,password:string){
+	return this.http.post('http://212.118.13.26/api/v1/emp/authemp/'+username,{
+		"password": password
+	})
 }
 }

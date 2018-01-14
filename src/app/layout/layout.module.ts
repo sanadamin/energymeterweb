@@ -43,6 +43,6 @@ import { ForcemapComponent } from './forcemap/forcemap.component';
 
     ],
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent],
-    providers: [ServerService]
+    providers: []
 })
 export class LayoutModule {}

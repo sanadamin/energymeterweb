@@ -102,6 +102,7 @@ export class TasksapprovalComponent implements OnInit {
       console.log('OK The dialog was closed');
       console.log(this.data.username);
       this.data.action = result['action'];
+      this.data.username = localStorage.getItem('userName');
       console.log(this.data.username);
       this.serverService.UpdateTask(this.data.id,this.data.action,this.data.username).subscribe((res)=>{
   this.router.navigate(['/dashboard']);
