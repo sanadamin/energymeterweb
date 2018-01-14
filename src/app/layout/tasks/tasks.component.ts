@@ -47,7 +47,7 @@ export class TasksComponent implements OnInit,AfterViewInit {
       this.tasks[j].taskStartTime)); 
      j++;}
      console.log("123123");
-     new Angular2Csv(users, 'My Report');
+     
      // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
         this.dataSource.paginator = this.paginator;
