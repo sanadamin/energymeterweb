@@ -20,44 +20,49 @@
 
         <!-- Progress Column -->
         <ng-container matColumnDef="progress">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Task Name </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Budget Line </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.progress}} </mat-cell>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Site Name </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Reserved Budget </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name | currency:'JOD'}} </mat-cell>
         </ng-container>
 
         <!-- Color Column -->
         <ng-container matColumnDef="date">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Task Date </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.date | date}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Associated PRs </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.date }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="color">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.color}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Returned Budget </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.color | currency:'JOD' }} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="test">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Assigned To </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.test}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Original Budget </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.test | currency:'JOD'}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="actiontaken">
+        <!--<ng-container matColumnDef="actiontaken">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Action Taken </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.actiontaken}} </mat-cell>
-        </ng-container>
+        </ng-container>-->
 
-        <ng-container matColumnDef="acktime">
+        <!--<ng-container matColumnDef="acktime">
             <mat-header-cell *matHeaderCellDef mat-sort-header> AcK Time </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.acktime}} </mat-cell>
+
+        </ng-container>
+        <ng-container matColumnDef="taskenteredtime">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Enter Time </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.taskenteredtime}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="closetime">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Close Time </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.closetime}} </mat-cell>
-        </ng-container>
+        </ng-container>-->
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 

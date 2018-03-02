@@ -153,6 +153,7 @@ export class DashboardComponent implements OnInit {
                 
                 // console.log(this.alarmstat.today1);
             }
+            
         this.barChartLabels = [
                     this.days.today,
                     this.days.today1,
@@ -266,14 +267,17 @@ taskApproval : number;
         scaleShowVerticalLines: true,
         responsive: true
     };
+     
+               
+                 
     public barChartLabels: string[] = [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7'
+        'Today',
+        'Yesterday',
+        '-3',
+        '-4',
+        '-5',
+        '-6',
+        '-7'
     ];
     public barChartType: string = 'bar';
     public barChartLegend: boolean = true;

@@ -12,6 +12,11 @@
 <div class="example-container mat-elevation-z8">
 
     <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="select">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Select </mat-header-cell>
+            <mat-cell *matCellDef="let row"> <input type="checkbox" name="vehicle" value="Bike" (click)="check(row)"> </mat-cell>
+        </ng-container>
+
 
         <!-- ID Column -->
         <ng-container matColumnDef="id">
@@ -52,9 +57,9 @@
 
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectedRow(row)" style="cursor: pointer">
+        <mat-row *matRowDef="let row; columns: displayedColumns;" style="cursor: pointer">
         </mat-row>
     </mat-table>
-
+    <button class="btn btn-success" (click)="selectedRow()">Approve</button>
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>

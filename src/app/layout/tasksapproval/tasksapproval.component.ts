@@ -14,8 +14,12 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 export class TasksapprovalComponent implements OnInit {
   animal: string;
   name: string;
+  rows = [];
+  isapproved = false;
+  actionie = '';
+  myDate : userData1[] = [];
   public data: userData1 = {id:'',username: '',sitename:'',action:'',employee:''};
- displayedColumns = ['id', 'name', 'progress','test', 'color','closing','action'];
+ displayedColumns = ['select','id', 'name', 'progress','test', 'color','closing','action'];
  dataSource: MatTableDataSource<UserData>;
  tasks: task[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -27,7 +31,7 @@ export class TasksapprovalComponent implements OnInit {
     this.serverService.readTaskApproval().subscribe((res)=>{
           
             let s = res.json();
-            s
+            
             console.log(s);
             for (let i of s){
          
@@ -85,35 +89,51 @@ export class TasksapprovalComponent implements OnInit {
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-  selectedRow(row){
-   this.data.username = row['test'];
-   this.data.sitename = row['name'];
-   this.data.action = row['action'];
-   this.data.id = row['taskid'];
-   
-    console.log(row);
-    console.log('123123'+this.data.sitename);
+  check(row){
+    
+    this.myDate.push({      
+        id:row['taskid'],
+        username:localStorage.getItem('userName'),
+        employee:row['test'],
+        sitename: row['name'],
+        action: row['action']});
+  }
+  selectedRow(){
+  for(var i=0;i<this.myDate.length;i++){
+    this.actionie = this.myDate[i].action;
+    console.log('123123'+this.myDate[i].sitename);
     let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: '400px',
-      data: { name: this.data.username,sitename: this.data.sitename, actiontaken:row['action'],employee: this.data.username , action: this.data.action }
+      data: {
+         name: localStorage.getItem('userName'),
+         sitename: this.myDate[i].sitename, 
+         actiontaken:this.myDate[i].action,
+         employee: this.myDate[i].employee , 
+         action:this.myDate[i].action,
+         id:this.myDate[i].id }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('OK The dialog was closed');
-      console.log(this.data.username);
-      this.data.action = result['action'];
+      console.log('OK The dialog was closed' + result['action']);
+      console.log(this.data.id+'12'+this.data.action+'123'+this.data.username);
+      
       this.data.username = localStorage.getItem('userName');
-      console.log(this.data.username);
+      this.data.action = result['action'];
+      this.data.id = result['id'];
       this.serverService.UpdateTask(this.data.id,this.data.action,this.data.username).subscribe((res)=>{
-  this.router.navigate(['/dashboard']);
+  console.log(res);
+  this.isapproved = true;
 },(err)=>{
   alert(err);
 })
     });
-  
+  this.myDate = [];
   }
-
-
+ 
+if(this.isapproved){
+  this.router.navigate(['/dashboard']);
+}
+  }
 }
 
 /** Builds and returns a new User. */

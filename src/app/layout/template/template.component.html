@@ -1,0 +1,117 @@
+<div [@routerTransition]>
+
+
+    <div class="row">
+        <div class="col col-xs-12">
+            <div class="card mb-12">
+                <div class="card-header">
+                    New Template
+                </div>
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <div class="example-container">
+                            <mat-form-field class="col-xs-12">
+                                <input matInput placeholder=" Template Name" [(ngModel)]="templatename">
+                            </mat-form-field>
+                            <p></p>
+                            <mat-form-field class="col-xs-12">
+                                <input matInput placeholder=" Data Name" [(ngModel)]="fieldedit">
+                            </mat-form-field>
+
+
+                            <mat-form-field>
+                                <mat-select placeholder="Select Data Type" [(ngModel)]="fieldedittype">
+
+                                    <mat-option value="Text">Text</mat-option>
+                                    <mat-option value="Number">Number</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+
+                            <button class="btn btn-info btn-sm " (click)="randomize() ">Add Task</button>
+                            <p></p>
+                            <button class="btn btn-success btn-sm " (click)="AddField() ">Add Field</button>
+                            <!--<mat-form-field>
+                                <mat-select placeholder="Select Employee" [(ngModel)]="assignedTo">
+                                    <mat-option *ngFor="let emp of empList" value="{{ emp }}">{{emp}}</mat-option>
+
+                                </mat-select>
+                            </mat-form-field>-->
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="example-container ">
+
+
+    <div class="col-xs-12">
+        <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div class="container" *ngIf="isAvailable">
+        <h2>Template</h2>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field Data</th>
+                    <th>Field Type</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr (click)="Test()" *ngFor="let field of fieldlist">
+                    <td>{{field.fielddata}}</td>
+                    <td>{{field.fieldtype}}</td>
+
+                </tr>
+foreach
+            </tbody>
+        </table>
+    </div>
+    <div class="example-container mat-elevation-z8">
+        <div class="example-header">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+        </div>
+
+        <mat-table #table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef> id </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> Template Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="employee">
+                <mat-header-cell *matHeaderCellDef> Employee </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.employee}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectedRow(row)" style="cursor: pointer"></mat-row>
+
+
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+
+</div>

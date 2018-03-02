@@ -1,7 +1,10 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
     <div class="list-group">
-        <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <!--<a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Dashboard' | translate }}
+        </a>-->
+        <a [routerLink]="['/record']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-database"></i>&nbsp;{{ 'Record' | translate }}
         </a>
         <!--<a [routerLink]="['/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;{{ 'Charts' | translate }}
@@ -18,7 +21,7 @@
         <!--<a [routerLink]="['/grid']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-wrench"></i>&nbsp;{{ 'Bootstrap Grid' | translate }}
         </a>-->
-        <a [routerLink]="['/map']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <!--<a [routerLink]="['/map']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-map"></i>&nbsp;{{ 'Force Map' | translate }}
         </a>
         <a [routerLink]="['/tasks']" [routerLinkActive]="['router-link-active']" class="list-group-item">
@@ -33,6 +36,12 @@
         <a [routerLink]="['/record']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-database"></i>&nbsp;{{ 'Record' | translate }}
         </a>
+        <a [routerLink]="['/config']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-cog"></i>&nbsp;{{ 'Config' | translate }}
+        </a>
+        <a [routerLink]="['/template']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-sticky-note"></i>&nbsp;{{ 'Template' | translate }}
+        </a>-->
         <!--<a [routerLink]="['/components']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-th-list"></i>&nbsp;{{ 'Component' | translate }}
         </a>-->

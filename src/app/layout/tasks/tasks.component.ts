@@ -1,6 +1,8 @@
 import { ServerService } from './../dashboard/Server.Service';
-import { Component, OnInit, ViewChild,AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild,AfterViewInit,Inject } from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import {Router } from '@angular/router';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Angular2Csv} from 'angular2-csv/Angular2-csv'
 @Component({
@@ -13,13 +15,14 @@ import {Angular2Csv} from 'angular2-csv/Angular2-csv'
 export class TasksComponent implements OnInit,AfterViewInit {
   
 
- displayedColumns = ['id', 'name', 'progress', 'color','test'];
+ displayedColumns = ['id', 'name', 'progress', 'color','test','date','ack','isack'];
+ public data: userData1 = {id:'',username: '',sitename:'',action:'',employee:''};
  dataSource: MatTableDataSource<UserData>;
  tasks: task[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private serverService:ServerService) {
+  constructor(private serverService:ServerService, private router:Router,public dialog: MatDialog) {
     // Create 100 users
     this.serverService.readTasks().subscribe((res)=>{
           
@@ -32,7 +35,12 @@ export class TasksComponent implements OnInit,AfterViewInit {
               taskName: i['taskname'],
               taskStaff:i['taskassignedto'],
               taskSite:i['sitename'],
-              taskStartTime:i['taskstarttime']})
+              taskStartTime:i['taskstarttime'],
+              taskAck:i['acknowledgetime'],
+              taskisAck:i['acknowledge'],
+              taskdate:i['taskdate'],
+              taskid:i['_id']
+            })
             }
            
     const users: UserData[] = [];
@@ -44,7 +52,11 @@ export class TasksComponent implements OnInit,AfterViewInit {
       this.tasks[j].taskName,
       this.tasks[j].taskSite,
       this.tasks[j].taskStaff,
-      this.tasks[j].taskStartTime)); 
+      this.tasks[j].taskStartTime,
+      this.tasks[j].taskAck,
+      this.tasks[j].taskisAck,
+      this.tasks[j].taskdate,
+      this.tasks[j].taskid)); 
      j++;}
      console.log("123123");
      
@@ -90,11 +102,38 @@ OnAddTask(){
   eventClicked(){
 
   }
-  
+
+ 
+  OnClickRow(row){
+   
+ let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: '400px',
+      data: {
+         name: localStorage.getItem('userName'),
+         sitename: row['name'], 
+         actiontaken:row['progress'],
+         employee: row['test'] , 
+         action:'uu',
+         id:row[''] }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('OK The dialog was closed' + result['action']);
+      console.log(this.data.id+'12'+this.data.action+'123'+this.data.username);
+      
+      
+      this.serverService.DeleteTask(row['taskid']).subscribe((res)=>{
+  console.log(res);
+  this.router.navigate(['/dashboard']);
+},(err)=>{
+  alert(err);
+})
+    });
+}
 }
 
 /** Builds and returns a new User. */
-function createNewUser(id: number,siteName: string,taskname: string,employee: string,startTime:string): UserData {
+function createNewUser(id: number,siteName: string,taskname: string,employee: string,startTime:string,taskack:string,taskisack:string,taskdate:string,taskid:string): UserData {
   const name =
       NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
       NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
@@ -104,7 +143,11 @@ function createNewUser(id: number,siteName: string,taskname: string,employee: st
     name: taskname,
     progress: siteName,
     color: startTime,
-    test: employee
+    test: employee,
+    ack: taskack,
+    isack:taskisack,
+    date:taskdate,
+    taskid:taskid
   };
 }
 
@@ -121,11 +164,44 @@ export interface UserData {
   progress: string;
   color: string;
   test: string;
+  date: string;
+  ack: string;
+  isack:string,
+  taskid:string
 }
 
 interface task{
     taskName: string,
     taskStaff: string,
     taskSite:string,
-    taskStartTime: string
+    taskStartTime: string,
+    taskAck: string,
+    taskisAck:string,
+    taskdate:string,
+    taskid:string
 }
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'dialog-overview-example-dialog.html',
+  styleUrls: ['tasks.component.scss']
+})
+export class DialogOverviewExampleDialog {
+  
+  constructor(private serverService:ServerService, private router:Router,
+    public dialogRef: MatDialogRef <DialogOverviewExampleDialog>,@Inject(MAT_DIALOG_DATA) public data: userData1) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  onConfirm(){
+    console.log(this.data.id,this.data.action,this.data.username);
+  }
+
+}
+ export interface userData1 {
+   id: string,
+   username:string,
+   sitename:string,
+   action:string,
+   employee: string
+ }

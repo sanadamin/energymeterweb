@@ -1,7 +1,10 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TasksComponent,DialogOverviewExampleDialog } from './tasks.component';
-import {TasksRoutingModule} from './tasks-routing.module'
+import { TemplateComponent } from './template.component';
+import {TemplateRoutingModule} from './template-routing.module'
 import { PageHeaderModule } from './../../shared';
 import {CdkTableModule} from '@angular/cdk/table'
 import {
@@ -39,7 +42,7 @@ import {
   MatFormFieldModule,MatCommonModule
 } from '@angular/material';
 @NgModule({
-  imports: [CommonModule, MatCommonModule,TasksRoutingModule, PageHeaderModule
+  imports: [CommonModule,NgSelectModule, PageHeaderModule,MatFormFieldModule,MatInputModule,FormsModule, MatSelectModule,MatProgressBarModule ,NgSelectModule,TemplateRoutingModule, PageHeaderModule
   ,MatTableModule,MatPaginatorModule,MatFormFieldModule,MatInputModule,MatAutocompleteModule,MatButtonModule,MatSelectModule,MatAutocompleteModule,
   MatButtonModule,
   CdkTableModule,
@@ -73,7 +76,7 @@ import {
   MatTooltipModule,
   MatStepperModule,
   MatFormFieldModule],
-entryComponents: [ DialogOverviewExampleDialog],
-  declarations: [TasksComponent,DialogOverviewExampleDialog]
+
+  declarations: [TemplateComponent]
 })
-export class TasksModule {}
+export class TemplateModule {}

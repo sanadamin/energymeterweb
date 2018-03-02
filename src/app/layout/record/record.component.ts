@@ -14,32 +14,40 @@ import { ServerService } from './../dashboard/Server.Service';
 export class RecordComponent implements OnInit {
  
 
- displayedColumns = ['id', 'name', 'progress','date', 'color','acktime','closetime','test','actiontaken'];
+ displayedColumns = ['id',  'progress','test','name', 'color','date'];
  dataSource: MatTableDataSource<UserData>;
  tasks: task[] = [];
  ss = [];
+ rows= [];
+ recordTemplate: recordTemp[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private serverService:ServerService) {
     // Create 100 users
-    this.serverService.GetRecord().subscribe((res)=>{
+    this.serverService.GetAllBudgetLines().subscribe((res)=>{
           
             let s = res.json();
             this.ss = s;
             console.log(s);
             for (let i of s){
-         
+              let sj = i['associatedprs'];
+              let prs = '';
+              for(let ij of sj)
+              {
+                
+                prs = prs + ij['prname'] + ' (' + ij['prstatus'] + ')' + '\n';
+              }
+            alert(prs);
             this.tasks.push({
-              taskName: i['taskname'],
-              taskStaff:i['taskassignedto'],
-              taskSite:i['sitename'],
-              taskStartTime:i['taskstarttime'],
-              actiontaken:i['description'],
-              taskacktime:i['acknowledgetime'],
-              taskclosetime:i['closingtime'],
-              taskdate:i['taskdate']})
+              taskName: i['budgetline'],
+              taskStaff:i['budgetamount'],
+              taskSite:i['budgetreserved'],
+              taskStartTime:i['budgetreturned'],
+              actiontaken: prs,
+             })
             }
+            
            
     const users: UserData[] = [];
      let j:number = 0;
@@ -52,9 +60,7 @@ export class RecordComponent implements OnInit {
       this.tasks[j].taskStaff,
       this.tasks[j].taskStartTime,
       this.tasks[j].actiontaken,
-      this.tasks[j].taskacktime,
-      this.tasks[j].taskclosetime,
-      this.tasks[j].taskdate)); 
+      )); 
      j++;}
      
      // Assign the data to the data source for the table to render
@@ -67,7 +73,14 @@ export class RecordComponent implements OnInit {
     
   }
 
+check(row){
+  this.rows.push(row['taskid']);
+  for(var i=0;i<this.rows.length;i++){
+    
 
+  }
+  
+}
   ngOnInit() {
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
@@ -97,7 +110,7 @@ OnAddTask(){
 
   }
   eventClicked(){
-new Angular2Csv(this.ss, 'My Report',{headers: ['taskid','Ack Time','Approved By','Approved Time','Action Taken','Closing Time','Start Time','Date','Employee','Task Category','Task Name','Site Name']});
+new Angular2Csv(this.recordTemplate, 'My Report',{headers: ['Date','Employee Name','Site Name','Task Category','Task Name','Consumed Time','Charging Time','Action Taken','Approved By','Start Time','Acknowledge Time','Site Entered Time','Closing Time']});
   }
   
 }
@@ -110,23 +123,17 @@ function createNewUser(
   employee: string,
   startTime:string,
   action:string,
-  acktime:string,
-  closetime:string,
-  date:string): UserData {
-  const name =
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-      
+  ): UserData {
+  
   return {
     id: id.toString(),
     name: taskname,
     progress: siteName,
     color: startTime,
     test: employee,
-    actiontaken:action,
-    acktime:acktime,
-    closetime:closetime,
-    date:date
+    date:action,
+   
+
   };
 }
 
@@ -143,10 +150,8 @@ export interface UserData {
   progress: string;
   color: string;
   test: string;
-  actiontaken:string,
-  acktime: string,
-  closetime:string,
-  date:string
+  date:string,
+  
 }
 
 interface task{
@@ -155,7 +160,23 @@ interface task{
     taskSite:string,
     taskStartTime: string,
     actiontaken:string,
-    taskacktime:string,
-    taskclosetime:string,
-    taskdate:string
+    
+}
+
+interface recordTemp{
+  taskDate: String,
+  empName: String,
+  siteName: String,
+  taskcat: String,
+  taskName: String,
+  consumedTime:String,
+  chargingHours:String,
+  actionTaken: String,
+  approvedBy: String,
+  startTime:String,
+  ackTime:String,
+  enteredtime:String,
+  closingTime:String,
+
+ 
 }

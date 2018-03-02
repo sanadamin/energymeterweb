@@ -1,3 +1,5 @@
+import { NgSelectModule } from '@ng-select/ng-select';
+import {SelectModule} from 'ng2-select'
 import { TasksComponent } from './tasks/tasks.component';
 import { ServerService } from './dashboard/Server.Service';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,9 +22,12 @@ import { TasksapprovalComponent, DialogOverviewExampleDialog } from './tasksappr
 import { NewtaskComponent } from './newtask/newtask.component';
 import { RecordComponent } from './record/record.component';
 import { ForcemapComponent } from './forcemap/forcemap.component';
+import { AppconfigComponent } from './appconfig/appconfig.component';
+import { TemplateComponent } from './template/template.component';
 
 @NgModule({
     imports: [
+        NgSelectModule,
         CommonModule,
         LayoutRoutingModule,
         FormsModule,

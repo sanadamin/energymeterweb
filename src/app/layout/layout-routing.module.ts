@@ -25,7 +25,11 @@ const routes: Routes = [
             {path:'record',loadChildren:
             './record/record.module#RecordModule'},
             {path: 'map',loadChildren:
-        './forcemap/forcemap.module#ForceMapModule'}
+        './forcemap/forcemap.module#ForceMapModule'},
+        {path: 'config',loadChildren:
+        './appconfig/appconfig.module#AppconfigModule'},
+         {path: 'template',loadChildren:
+        './template/template.module#TemplateModule'}
 
         ]
     }

@@ -1,0 +1,87 @@
+<div [@routerTransition]>
+
+
+    <div class="row">
+        <div class="col col-xs-12">
+            <div class="card mb-12">
+                <div class="card-header">
+                    Task Configuration
+                </div>
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <div class="example-container">
+
+                            <mat-form-field class="col-xs-12">
+                                <input matInput placeholder=" Task Name" [(ngModel)]="taskName">
+                            </mat-form-field>
+
+                            <mat-form-field class="col-xs-12">
+                                <input matInput placeholder=" Task Category" [(ngModel)]="taskCat">
+                            </mat-form-field>
+
+
+                            <button class="btn btn-info btn-sm " (click)="TaskAdd() ">Add Task</button>
+
+                            <!--<mat-form-field>
+                                <mat-select placeholder="Select Employee" [(ngModel)]="assignedTo">
+                                    <mat-option *ngFor="let emp of empList" value="{{ emp }}">{{emp}}</mat-option>
+
+                                </mat-select>
+                            </mat-form-field>-->
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col col-xs-12">
+            <div class="card mb-12">
+                <div class="card-header">
+                    Action Configuration
+                </div>
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <div class="example-container">
+
+                            <mat-form-field class="col-xs-12">
+                                <input matInput placeholder=" Action Name" [(ngModel)]="actionName">
+                            </mat-form-field>
+                            <mat-form-field class="col-xs-12">
+                                <input matInput placeholder=" Action Translation" [(ngModel)]="actionTranslation">
+                            </mat-form-field>
+
+
+
+                            <button class="btn btn-info btn-sm " (click)="ActionAdd() ">Add Action</button>
+
+                            <!--<mat-form-field>
+                                <mat-select placeholder="Select Employee" [(ngModel)]="assignedTo">
+                                    <mat-option *ngFor="let emp of empList" value="{{ emp }}">{{emp}}</mat-option>
+
+                                </mat-select>
+                            </mat-form-field>-->
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="example-container ">
+
+
+    <div class="col-xs-12">
+        <!--<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>-->
+    </div>
+
+</div>
