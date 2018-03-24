@@ -24,6 +24,10 @@ import { RecordComponent } from './record/record.component';
 import { ForcemapComponent } from './forcemap/forcemap.component';
 import { AppconfigComponent } from './appconfig/appconfig.component';
 import { TemplateComponent } from './template/template.component';
+import { DivisionsComponent } from './divisions/divisions.component';
+import { TaskcontrolComponent } from './taskcontrol/taskcontrol.component';
+import { TaskconfigComponent } from './taskconfig/taskconfig.component';
+import { UpdatetaskComponent } from './updatetask/updatetask.component';
 
 @NgModule({
     imports: [
@@ -47,7 +51,7 @@ import { TemplateComponent } from './template/template.component';
         NgbDropdownModule.forRoot(),
 
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent],
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, TaskcontrolComponent ],
     providers: []
 })
 export class LayoutModule {}

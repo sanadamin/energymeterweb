@@ -60,6 +60,6 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;" style="cursor: pointer">
         </mat-row>
     </mat-table>
-    <button class="btn btn-success" (click)="selectedRow()">Approve</button>
+    <button class="btn btn-success" (click)="selectedRow(row)">Approve</button>
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>

@@ -80,7 +80,71 @@ DeleteTask(id:string){
 	return this.http.get('http://212.118.13.26/api/v1/task/delete/'+id);
 
 }
-GetAllBudgetLines(){
-	return this.http.get('http://139.59.54.123/api/v1/budget/getall');
+GetAlltasks(){
+	return this.http.get('http://127.0.0.1:3005/api/v1/devision/');
+}
+AddDivision(name:string){
+	return this.http.post('http://127.0.0.1:3005/api/v1/ownerdivision/adddiv',{"name":name});
+
+}
+
+getEmps(){
+	return this.http.get('http://127.0.0.1:3005/api/v1/owner/');
+}
+getDivs(){
+	return this.http.get('http://127.0.0.1:3005/api/v1/ownerdivision');
+}
+getAuth(username: string,password: string){
+	return this.http.post('http://127.0.0.1:3005/api/v1/owner/auth',{
+		"username":username,
+		"password":password
+	})
+}
+getempdata(username:string){
+	return this.http.put('http://127.0.0.1:3005/api/v1/owner/empdata',{"username":username});
+
+}
+updatedivisionEmp(divisionname: string, employeename: string){
+	return this.http.put('http://127.0.0.1:3005/api/v1/ownerdivision/updateemp',{
+		"name":divisionname,
+		"empname":employeename
+
+	})
+}
+AddOwner(name:string, username:string,password:string,email:string,auth:string){
+	return this.http.post('http://127.0.0.1:3005/api/v1/owner/add',{
+		"name":name,
+	"username":username,
+	"password":password,
+	"email":email,
+	"auth": auth
+
+	});
+}
+GetTaskByID(id:string){
+	return this.http.get('http://127.0.0.1:3005/api/v1/devision/find/'+id);
+}
+AddTaskTracker(taskname:string,description:string,taskowner:string,tasktype:string,project:string,duedate:string){
+	return this.http.post('http://127.0.0.1:3005/api/v1/devision/add',{
+		"taskname":taskname,
+		"description":description,
+		"taskownmer":taskowner,
+		"tasktype":tasktype,
+		"project": project,
+		"duedate":duedate
+		
+	})
+
+}
+UpdateTaskTracker(taskid:string,progress:string,duedate:string,relatedpr:string,relatedpo:string,update:string,updater:string){
+	return this.http.put('http://127.0.0.1:3005/api/v1/devision/updatetask',{
+			"taskid":taskid,
+	"progress":progress,
+	"duedate":duedate,
+	"relatedpr":relatedpr,
+	"relatedpo":relatedpo,
+	"update":update,
+	"name":updater
+	});
 }
 }

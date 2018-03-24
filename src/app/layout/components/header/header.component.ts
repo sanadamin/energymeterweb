@@ -1,3 +1,4 @@
+import { ServerService } from './../../dashboard/Server.Service';
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,9 +10,15 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
+    employeename: string = 'Test';
 
-    constructor(private translate: TranslateService, public router: Router) {
-
+    constructor(private translate: TranslateService, public router: Router, private serverService:ServerService) {
+        this.serverService.getempdata(localStorage.getItem('userName')).subscribe((res)=>{
+            
+          let newres = res.json();
+          this.employeename = newres['name'];  
+          console.log(this.employeename);
+        });
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();

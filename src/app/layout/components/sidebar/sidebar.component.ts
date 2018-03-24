@@ -1,3 +1,4 @@
+import { ServerService } from './../../dashboard/Server.Service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 export class SidebarComponent {
     isActive: boolean = false;
     showMenu: string = '';
-
+    isAdmin = false;
+constructor(private serverService:ServerService) {
+    console.log(localStorage.getItem('level') );
+   if(localStorage.getItem('level') === 'Admin'){
+       this.isAdmin = true;
+   }
+}
     eventCalled() {
         this.isActive = !this.isActive;
     }

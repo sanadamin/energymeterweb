@@ -18,13 +18,17 @@ export class LoginComponent implements OnInit {
 
     onLoggedin() {
         if((this.userName != '')&&(this.password != '')){
-            this.serverService.authenticateEmployee(this.userName,this.password).subscribe((res)=>{
+            this.serverService.getAuth(this.userName,this.password).subscribe((res)=>{
             console.log(res);
             console.log(res['_body']);
-            if(res['_body']==='pass'){
+            let newres = res.json();
+           
+            
+            console.log(newres['auth']);
+            if(newres['auth']==='Approved'){
                 localStorage.setItem('isLoggedin', 'true');
-                localStorage.setItem('userName',this.userName);
-                this.router.navigate(['/dashboard']);
+                localStorage.setItem('userName',this.userName);localStorage.setItem('level',newres['level']);
+                this.router.navigate(['/owner']);
             }else{
                 alert("Please Check Username and Password");
             }

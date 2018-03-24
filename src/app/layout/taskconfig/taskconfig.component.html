@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col col-xs-12">
+        <div class="card mb-12">
+            <div class="card-header">
+                Create Task
+            </div>
+            <div class="card-body">
+
+                <div class="form-group">
+                    <div class="example-container">
+
+                        <!--<ng-select [items]="tasks" bindLabel="name" bindValue="name" placeholder="Task Name" [(ngModel)]="taskName">
+                        </ng-select>-->
+
+                        <p></p>
+                        <table class="example-full-width" cellspacing="10">
+                            <tr>
+                                <td class="example-full-row">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Task Name" [(ngModel)]="TaskName">
+                                    </mat-form-field>
+                                </td>
+                                <td class="example-full-row">
+                                    <ng-select style="width:100%;padding: 10px" *ngIf="isloaded" [items]="emps1" bindLabel="name" bindValue="name" placeholder="Select Owner" [(ngModel)]="emps">
+                                        <ng-template ng-header-tmp>
+                                            Task Owner
+                                        </ng-template>
+                                    </ng-select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Task Type" [(ngModel)]="Tasktype">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="dp3" placeholder="Due Date" disabled [(ngModel)]="duedate">
+                                        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Project Name" [(ngModel)]="project">
+                                    </mat-form-field>
+
+                                </td>
+                            </tr>
+                        </table>
+
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Task Description" [(ngModel)]="Taskdescription">
+                        </mat-form-field>
+
+
+                        <!--<mat-form-field>
+                                <mat-select placeholder="Select Task Category" [(ngModel)]="taskCat">
+                                    <mat-option value="Power">Power</mat-option>
+                                    <mat-option value="2G">2G</mat-option>
+                                    <mat-option value="3G">3G</mat-option>
+                                    <mat-option value="4G">4G</mat-option>
+                                    <mat-option value="MicroWave">MicroWave</mat-option>
+                                </mat-select>
+                            </mat-form-field>-->
+                        <!--<ng-select [items]="taskcat1" bindLabel="name" bindValue="name" placeholder="Task Cat" [(ngModel)]="taskCat">
+                        </ng-select>
+                        <p></p>
+                        <ng-select [items]="taskcat" bindLabel="name" bindValue="name" placeholder="Employee Name" [(ngModel)]="assignedTo">
+                        </ng-select>-->
+
+
+                        <button class="btn btn-info btn-sm " (click)="addTask() ">Add Task</button>
+
+                        <!--<mat-form-field>
+                                <mat-select placeholder="Select Employee" [(ngModel)]="assignedTo">
+                                    <mat-option *ngFor="let emp of empList" value="{{ emp }}">{{emp}}</mat-option>
+
+                                </mat-select>
+                            </mat-form-field>-->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,137 @@
+<div class="row">
+    <div class="col col-xs-12">
+        <div class="card mb-12">
+            <div class="card-header">
+                Add Division
+            </div>
+            <div class="card-body">
+
+                <div class="form-group">
+                    <div class="example-container">
+
+                        <!--<ng-select [items]="tasks" bindLabel="name" bindValue="name" placeholder="Task Name" [(ngModel)]="taskName">
+                        </ng-select>-->
+
+                        <p></p>
+                        <mat-form-field class="col-xs-6">
+                            <input matInput placeholder="Division Name" [(ngModel)]="divisionName">
+                        </mat-form-field>
+
+
+                        <!--<mat-form-field>
+                                <mat-select placeholder="Select Task Category" [(ngModel)]="taskCat">
+                                    <mat-option value="Power">Power</mat-option>
+                                    <mat-option value="2G">2G</mat-option>
+                                    <mat-option value="3G">3G</mat-option>
+                                    <mat-option value="4G">4G</mat-option>
+                                    <mat-option value="MicroWave">MicroWave</mat-option>
+                                </mat-select>
+                            </mat-form-field>-->
+                        <!--<ng-select [items]="taskcat1" bindLabel="name" bindValue="name" placeholder="Task Cat" [(ngModel)]="taskCat">
+                        </ng-select>
+                        <p></p>
+                        <ng-select [items]="taskcat" bindLabel="name" bindValue="name" placeholder="Employee Name" [(ngModel)]="assignedTo">
+                        </ng-select>-->
+
+
+                        <button class="btn btn-info btn-sm " (click)="addDivision() ">Add Division</button>
+
+                        <!--<mat-form-field>
+                                <mat-select placeholder="Select Employee" [(ngModel)]="assignedTo">
+                                    <mat-option *ngFor="let emp of empList" value="{{ emp }}">{{emp}}</mat-option>
+
+                                </mat-select>
+                            </mat-form-field>-->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<p></p>
+<div class="row">
+    <div class="col col-xs-12">
+        <div class="card mb-12">
+            <div class="card-header">
+                Add Group To Division
+            </div>
+            <div class="card-body">
+
+                <div class="form-group">
+                    <div class="example-container">
+
+                        <!--<ng-select [items]="tasks" bindLabel="name" bindValue="name" placeholder="Task Name" [(ngModel)]="taskName">
+                        </ng-select>-->
+                        <ng-select *ngIf="isloaded" [items]="emps1" bindLabel="name" bindValue="name" placeholder="Select Division" [(ngModel)]="divs">
+                            <ng-template ng-header-tmp>
+                                Employees To Add
+                            </ng-template>
+                        </ng-select>
+                        <p></p>
+                        <ng-select *ngIf="isloaded" [items]="emps12" bindLabel="name" bindValue="name" placeholder="Employee To Be Added to {{divs}}" [(ngModel)]="emps">
+                            <ng-template ng-header-tmp>
+                                Employees To Add to {{divs}}
+                            </ng-template>
+                        </ng-select>
+
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+
+
+
+
+
+                        <!--<mat-form-field>
+                                <mat-select placeholder="Select Task Category" [(ngModel)]="taskCat">
+                                    <mat-option value="Power">Power</mat-option>
+                                    <mat-option value="2G">2G</mat-option>
+                                    <mat-option value="3G">3G</mat-option>
+                                    <mat-option value="4G">4G</mat-option>
+                                    <mat-option value="MicroWave">MicroWave</mat-option>
+                                </mat-select>
+                            </mat-form-field>-->
+                        <!--<ng-select [items]="taskcat1" bindLabel="name" bindValue="name" placeholder="Task Cat" [(ngModel)]="taskCat">
+                        </ng-select>
+                        <p></p>
+                        <ng-select [items]="taskcat" bindLabel="name" bindValue="name" placeholder="Employee Name" [(ngModel)]="assignedTo">
+                        </ng-select>-->
+
+
+                        <button class="btn btn-info btn-sm " (click)="addEmployee() ">Add Employee</button>
+
+                        <!--<mat-form-field>
+                                <mat-select placeholder="Select Employee" [(ngModel)]="assignedTo">
+                                    <mat-option *ngFor="let emp of empList" value="{{ emp }}">{{emp}}</mat-option>
+
+                                </mat-select>
+                            </mat-form-field>-->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--<div class="example-container ">
+
+
+    <div class="col-xs-12">
+        <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+    </div>
+</div>-->

@@ -13,38 +13,41 @@ import { ServerService } from './../dashboard/Server.Service';
 })
 export class RecordComponent implements OnInit {
  
-
- displayedColumns = ['id',  'progress','test','name', 'color','date'];
+ isClicked =false;
+ displayedColumns = ['id',  'progress','test','name', 'color','date','myprogress'];
  dataSource: MatTableDataSource<UserData>;
  tasks: task[] = [];
  ss = [];
  rows= [];
+ updatesarray:updates[] = [];
  recordTemplate: recordTemp[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private serverService:ServerService) {
     // Create 100 users
-    this.serverService.GetAllBudgetLines().subscribe((res)=>{
-          
+    this.serverService.GetAlltasks().subscribe((res)=>{
+            
             let s = res.json();
             this.ss = s;
             console.log(s);
             for (let i of s){
-              let sj = i['associatedprs'];
-              let prs = '';
-              for(let ij of sj)
-              {
+              // let sj = i['associatedprs'];
+              // let prs = '';
+              // for(let ij of sj)
+              // {
                 
-                prs = prs + ij['prname'] + ' (' + ij['prstatus'] + ')' + '\n';
-              }
-            alert(prs);
+              //   prs = prs + ij['prname'] + ' (' + ij['prstatus'] + ')' + '\n';
+              // }
+            
             this.tasks.push({
-              taskName: i['budgetline'],
-              taskStaff:i['budgetamount'],
-              taskSite:i['budgetreserved'],
-              taskStartTime:i['budgetreturned'],
-              actiontaken: prs,
+              taskName: i['taskname'],
+              taskStaff:i['description'],
+              taskSite:i['project'],
+              taskStartTime:i['duedate'],
+              actiontaken: i['taskownmer'],
+              progress:i['progress'],
+              taskid:i['_id']
              })
             }
             
@@ -60,6 +63,7 @@ export class RecordComponent implements OnInit {
       this.tasks[j].taskStaff,
       this.tasks[j].taskStartTime,
       this.tasks[j].actiontaken,
+      this.tasks[j].progress
       )); 
      j++;}
      
@@ -72,12 +76,22 @@ export class RecordComponent implements OnInit {
     
     
   }
+LoadTask(row)
+{
 
+  this.serverService.GetTaskByID(this.tasks[row['id']]['taskid']).subscribe((res)=>{
+    let  myupdates = res.json();
+    let updatesarray1 = myupdates['updates'];
+    for(let ii of updatesarray1){
+      alert(ii['value']);
+      this.updatesarray.push({update:ii['value'],date:ii['dateofupdate'],updater:ii['updater']})
+    }
+    this.isClicked = true;
+  })
+}
 check(row){
   this.rows.push(row['taskid']);
   for(var i=0;i<this.rows.length;i++){
-    
-
   }
   
 }
@@ -123,6 +137,7 @@ function createNewUser(
   employee: string,
   startTime:string,
   action:string,
+  myprogress:string
   ): UserData {
   
   return {
@@ -132,6 +147,7 @@ function createNewUser(
     color: startTime,
     test: employee,
     date:action,
+    myprogress:myprogress
    
 
   };
@@ -151,6 +167,7 @@ export interface UserData {
   color: string;
   test: string;
   date:string,
+  myprogress:string
   
 }
 
@@ -160,6 +177,8 @@ interface task{
     taskSite:string,
     taskStartTime: string,
     actiontaken:string,
+    progress:string,
+    taskid:string
     
 }
 
@@ -179,4 +198,9 @@ interface recordTemp{
   closingTime:String,
 
  
+}
+interface updates{
+  update:string,
+  date:string,
+  updater:string
 }

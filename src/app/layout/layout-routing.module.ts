@@ -25,11 +25,19 @@ const routes: Routes = [
             {path:'record',loadChildren:
             './record/record.module#RecordModule'},
             {path: 'map',loadChildren:
-        './forcemap/forcemap.module#ForceMapModule'},
-        {path: 'config',loadChildren:
-        './appconfig/appconfig.module#AppconfigModule'},
-         {path: 'template',loadChildren:
-        './template/template.module#TemplateModule'}
+            './forcemap/forcemap.module#ForceMapModule'},
+            {path: 'config',loadChildren:
+            './appconfig/appconfig.module#AppconfigModule'},
+            {path: 'template',loadChildren:
+            './template/template.module#TemplateModule'},
+            {path: 'owner',loadChildren:
+            './owner/owner.module#OwnerModule'},
+            {path: 'divisions',loadChildren:
+            './divisions/divisions.module#DivisionModule'},
+            {path: 'taskconfig',loadChildren:
+            './taskconfig/taskconfig.module#TaskConfigModule'},
+            {path: 'updatetask',loadChildren:
+            './updatetask/updatetask.module#UpdateTaskModule'}
 
         ]
     }
