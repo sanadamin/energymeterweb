@@ -13,12 +13,15 @@ import { routerTransition } from '../../router.animations';
 export class UpdatetaskComponent implements OnInit {
   isClicked = false;
   Taskid='';
+  enitiesmodel:entity[] = [];
+  entitieshistory:entity1[] = [];
   TaskName = '';
   progress = '';
   RelatedPR = '';
   RelatedPO = '';
   duedate = '';
   project = '';
+  myentitiesarray=[];
   mystringarray = [];
   emps: string = 'Please Select Employee';
   emps1:employee[] = [];
@@ -79,6 +82,15 @@ LoadTask(row){
       this.lastupdate = s['value'];
      
     }
+    this.myentitiesarray =[];
+    this.enitiesmodel = [];
+    this.entitieshistory = [];
+    for(let i of thisres['effectedentities']){
+      this.myentitiesarray.push({entityname:i['entityname'],entityupdate:i['entityupdate']});
+      this.enitiesmodel.push({entityname:i['entityname'],entityupdate:i['entityupdate']});
+      this.entitieshistory.push({entityname:i['entityname'],entityupdate:i['entityupdate']});
+    //  alert(this.enitiesmodel[0].entityname);
+    }
   this.Updatedescription = this.lastupdate;
   this.isClicked = true;
   })
@@ -87,10 +99,15 @@ LoadTask(row){
   }
 
   UpdateTask(){
-    alert('here');
+  
     let username = localStorage.getItem('userName');
-    this.serverService.UpdateTaskTracker(this.Taskid,this.progress,this.duedate,this.RelatedPR,this.RelatedPO,this.Updatedescription,username).subscribe((res)=>{
-      alert('Task Updated');
+    this.serverService.UpdateTaskTracker(this.Taskid,this.progress,this.duedate,this.RelatedPR,this.RelatedPO,this.Updatedescription,username,this.enitiesmodel).subscribe((res)=>{
+      this.serverService.UpdateTaskHistory(this.Taskid,this.entitieshistory).subscribe((res)=>{
+alert('Task Updated');
+this.isClicked = false;
+this.entitieshistory = [];
+      })
+      
     });
   }
 // ngAfterViewInit() {
@@ -140,5 +157,14 @@ export interface UserData {
 interface employee {
    id:number,
    name:string
+ }
+ interface entity{
+   entityname:string,
+   entityupdate:string
+ }
+ interface entity1{
+   entityname:string,
+   entityupdate:string
+ 
  }
 

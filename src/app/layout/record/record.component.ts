@@ -19,6 +19,7 @@ export class RecordComponent implements OnInit {
  tasks: task[] = [];
  ss = [];
  rows= [];
+ columns:any = [];
  updatesarray:updates[] = [];
  recordTemplate: recordTemp[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -81,11 +82,23 @@ LoadTask(row)
 
   this.serverService.GetTaskByID(this.tasks[row['id']]['taskid']).subscribe((res)=>{
     let  myupdates = res.json();
-    let updatesarray1 = myupdates['updates'];
-    for(let ii of updatesarray1){
-      alert(ii['value']);
-      this.updatesarray.push({update:ii['value'],date:ii['dateofupdate'],updater:ii['updater']})
+    let updatesarray1 = myupdates['entitieshistory'];
+    let entitiesupdates = myupdates['effectedentities'];
+    for(let ii of entitiesupdates){
+     
+      this.updatesarray.push({update:ii['entityname'],date:ii['dateofupdate'],updater:ii['entityupdate']});
+      for(let jj of updatesarray1){
+          let temparray= [];
+        if(ii['entityname'] === jj['entityname']){
+          this.columns.push({name:ii['entityname'],update:jj['entityupdate'],dateofupdate:jj['dateofupdate']});
+         
+      
+     
+        }
+      
     }
+    }
+    
     this.isClicked = true;
   })
 }

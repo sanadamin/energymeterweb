@@ -122,11 +122,21 @@
 
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <mat-form-field *ngFor="let item of myentitiesarray;let in=index" myentitiesarray class="example-full-width">
+                                <input matInput placeholder="Entity Name" [(ngModel)]="enitiesmodel[in].entityname">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field *ngFor="let item of myentitiesarray;let in=index" myentitiesarray class="example-full-width">
+                                <input matInput placeholder="Entity Update" [(ngModel)]="enitiesmodel[in].entityupdate">
+                            </mat-form-field>
+                        </td>
+                    </tr>
                 </table>
 
-                <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Update Description" [(ngModel)]="Updatedescription">
-                </mat-form-field>
+
 
                 <button class="btn btn-success" style="width: 100%" (click)="UpdateTask()">Update</button>
             </div>

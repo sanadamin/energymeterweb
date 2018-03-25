@@ -101,27 +101,27 @@
                     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
                 </div>
                 <div>
-                    <table>
+                    <table border="1">
 
                         <th style="padding: 20px">
-                            Update Date
+                            Entity
                         </th>
                         <th style="padding: 20px">
                             Update Description
                         </th>
                         <th style="padding: 20px">
-                            Updater
+                            Date of Update
                         </th>
 
-                        <tr *ngFor="let item of updatesarray">
+                        <tr *ngFor="let item of columns">
                             <td style="padding: 20px">
-                                {{item.date}}
+                                {{item.name}}
                             </td>
                             <td style="padding: 20px">
                                 {{item.update}}
                             </td>
                             <td style="padding: 20px">
-                                {{item.updater}}
+                                {{item.dateofupdate}}
                             </td>
                         </tr>
                     </table>

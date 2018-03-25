@@ -13,6 +13,10 @@ export class TaskconfigComponent implements OnInit {
   Tasktype = '';
   duedate = '';
   project = '';
+   isShown = false;
+  entitiesvalues = '';
+  entities='';
+  enityarray:entity[] = [];
   emps: string = 'Please Select Employee';
   emps1:employee[] = [];
   constructor(private serverService:ServerService) {
@@ -30,13 +34,21 @@ export class TaskconfigComponent implements OnInit {
     })
 
    }
-
+AddEntity(){
+  this.enityarray.push({entityname:this.entities,entityupdate:""});
+  alert('Entity ' + this.entities + ' Added Successfully' );
+  this.entitiesvalues = '';
+  for ( let i of this.enityarray){
+    this.isShown = true;
+    this.entitiesvalues = this.entitiesvalues + i['entityname'] + ', ';
+  }
+}
   ngOnInit() {
   }
   addTask(){
     console.log(this.TaskName+this.Tasktype+this.Taskdescription+this.duedate+this.project+this.emps)
    if(this.TaskName&&this.Tasktype&&this.Taskdescription&&this.duedate&&this.project&&this.emps){
-    this.serverService.AddTaskTracker(this.TaskName,this.Taskdescription,this.emps,this.Tasktype,this.project,this.duedate).subscribe((res)=>{
+    this.serverService.AddTaskTracker(this.TaskName,this.Taskdescription,this.emps,this.Tasktype,this.project,this.duedate,this.enityarray).subscribe((res)=>{
       alert('Task Created Successfully');
     });
    }else{
@@ -47,4 +59,8 @@ export class TaskconfigComponent implements OnInit {
 interface employee {
    id:number,
    name:string
+ }
+ interface entity {
+   entityname:string,
+   entityupdate:string
  }

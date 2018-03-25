@@ -49,6 +49,24 @@
 
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Related Entities" [(ngModel)]="entities">
+                                    </mat-form-field>
+
+                                </td>
+                                <td>
+                                    <button style="padding:10px" class="btn btn-info" (click)="AddEntity()">Add Entity</button>
+
+                                </td>
+                                <td>
+                                    <mat-form-field *ngIf="isShown">
+                                        <input matInput placeholder="Related Entities" disabled [(ngModel)]="entitiesvalues">
+                                    </mat-form-field>
+
+                                </td>
+                            </tr>
                         </table>
 
                         <mat-form-field class="example-full-width">

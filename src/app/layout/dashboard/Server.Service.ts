@@ -124,27 +124,36 @@ AddOwner(name:string, username:string,password:string,email:string,auth:string){
 GetTaskByID(id:string){
 	return this.http.get('http://127.0.0.1:3005/api/v1/devision/find/'+id);
 }
-AddTaskTracker(taskname:string,description:string,taskowner:string,tasktype:string,project:string,duedate:string){
+AddTaskTracker(taskname:string,description:string,taskowner:string,tasktype:string,project:string,duedate:string,entityarray:any){
 	return this.http.post('http://127.0.0.1:3005/api/v1/devision/add',{
 		"taskname":taskname,
 		"description":description,
 		"taskownmer":taskowner,
 		"tasktype":tasktype,
 		"project": project,
-		"duedate":duedate
+		"duedate":duedate,
+		"entities":entityarray
 		
 	})
 
 }
-UpdateTaskTracker(taskid:string,progress:string,duedate:string,relatedpr:string,relatedpo:string,update:string,updater:string){
+UpdateTaskTracker(taskid:string,progress:string,duedate:string,relatedpr:string,relatedpo:string,update:string,updater:string,entityupdate:any){
 	return this.http.put('http://127.0.0.1:3005/api/v1/devision/updatetask',{
 			"taskid":taskid,
 	"progress":progress,
 	"duedate":duedate,
 	"relatedpr":relatedpr,
 	"relatedpo":relatedpo,
-	"update":update,
-	"name":updater
+	"name":updater,
+	"update":entityupdate
+
+	});
+}
+UpdateTaskHistory(taskid:string,entityhistory:any){
+	return this.http.put('http://127.0.0.1:3005/api/v1/devision/updatehistory',{
+			"id":taskid,
+		"history":entityhistory
+
 	});
 }
 }
