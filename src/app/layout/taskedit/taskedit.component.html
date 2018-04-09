@@ -79,23 +79,44 @@
                 <div class="card-header">
                     Update Tasks
                 </div>
-                <div class="card-body">
-                    <table class="example-full-width" cellspacing="10">
+                <div>
+                    <mat-form-field>
+                        <mat-select placeholder="Please Select Action" [(value)]="selected" (change)="onChange($event)">
+                            <mat-option value="Update">None</mat-option>
+                            <mat-option value="Update">Update</mat-option>
+                            <mat-option value="Close">Close</mat-option>
+
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="card-body ">
+                    <table class="example-full-width " *ngIf="isClose" cellspacing="10 ">
+                        <tr>
+                            <mat-form-field>
+                                <input matInput placeholder="Closing Status" value="Google " [(ngModel)]="closingStatus ">
+                            </mat-form-field>
+                        </tr>
+                        <tr>
+                            <button style="padding:10px" class="btn btn-success" (click)="onClose()">Close Task</button>
+                        </tr>
+                    </table>
+                    <table class="example-full-width " *ngIf="isUpdate" cellspacing="10 ">
+
                         <tr>
 
-                            <td class="example-full-row">
+                            <td class="example-full-row ">
                                 <mat-form-field>
-                                    <input matInput placeholder="Task Name" disabled value="Google" [(ngModel)]="TaskName">
+                                    <input matInput placeholder="Task Name " disabled value="Google " [(ngModel)]="TaskName ">
                                 </mat-form-field>
                             </td>
 
-                            <td class="example-full-row">
+                            <td class="example-full-row ">
                                 <mat-form-field>
-                                    <input matInput type="number" placeholder="Progress (0-100)%" [(ngModel)]="progress">
+                                    <input matInput type="number " placeholder="Progress (0-100)% " [(ngModel)]="progress ">
                                 </mat-form-field>
                             </td>
-                            <td class="example-full-row">
-                                <!--<ng-select style="width:100%;padding: 10px" *ngIf="isloaded" [items]="emps1" bindLabel="name" bindValue="name" placeholder="Select Owner" [(ngModel)]="emps">
+                            <td class="example-full-row ">
+                                <!--<ng-select style="width:100%;padding: 10px " *ngIf="isloaded " [items]="emps1 " bindLabel="name " bindValue="name " placeholder="Select Owner " [(ngModel)]="emps ">
                                 <ng-template ng-header-tmp>
                                     Task Owner
                                 </ng-template>
@@ -106,34 +127,34 @@
                         <tr>
                             <td>
                                 <mat-form-field>
-                                    <input matInput [matDatepicker]="dp3" placeholder="Due Date" disabled [(ngModel)]="duedate">
-                                    <mat-datepicker-toggle disabled matSuffix [for]="dp3"></mat-datepicker-toggle>
-                                    <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                                    <input matInput [matDatepicker]="dp3 " placeholder="Due Date" disabled [(ngModel)]="duedate ">
+                                    <mat-datepicker-toggle matSuffix disabled="false" [for]="dp3 "></mat-datepicker-toggle>
+                                    <mat-datepicker disabled="false" #dp3></mat-datepicker>
                                 </mat-form-field>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <mat-form-field>
-                                    <input matInput placeholder="Related PR" [(ngModel)]="PRnumber">
+                                    <input matInput placeholder="Related PR " [(ngModel)]="PRnumber ">
                                 </mat-form-field>
                             </td>
                             <td>
                                 <mat-form-field>
-                                    <input matInput placeholder="PR Status" [(ngModel)]="PRStatus">
+                                    <input matInput placeholder="PR Status " [(ngModel)]="PRStatus ">
                                 </mat-form-field>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <mat-form-field>
-                                    <input matInput placeholder="Related PO" [(ngModel)]="PONumber">
+                                    <input matInput placeholder="Related PO " [(ngModel)]="PONumber ">
                                 </mat-form-field>
 
                             </td>
                             <td>
                                 <mat-form-field>
-                                    <input matInput placeholder="Related PO" [(ngModel)]="POStatus">
+                                    <input matInput placeholder="Related PO " [(ngModel)]="POStatus ">
                                 </mat-form-field>
 
                             </td>
@@ -160,29 +181,48 @@
                         </tr>
                         <tr>
                             <td>
-                                <mat-form-field *ngFor="let item of myentitiesarray;let in=index" myentitiesarray class="example-full-width">
-                                    <input matInput disabled placeholder="Entity Name" [(ngModel)]="enitiesmodel[in].entityname">
+                                <mat-form-field>
+                                    <input matInput placeholder="Related Entities" [(ngModel)]="entityname">
                                 </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field *ngFor="let item of myentitiesarray;let in=index" myentitiesarray class="example-full-width">
 
-                                    <input matInput [matDatepicker]="dp4" placeholder="Due Date" disabled [(ngModel)]="enitiesmodel[in].entityduedate">
-                                    <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
-                                    <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+                            </td>
+                            <td>
+                                <button style="padding:10px; width:100%" class="btn btn-info" (click)="AddEntity()">Add Entity</button>
+
+                            </td>
+                            <td>
+                                <mat-form-field *ngIf="isShown">
+                                    <input matInput placeholder="Add Entities" disabled [(ngModel)]="entitiesvalues">
+                                </mat-form-field>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan=100%>
+                                <hr style="width: 100%">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <mat-form-field *ngFor="let item of myentitiesarray;let in=index " myentitiesarray class="example-full-width ">
+                                    <input matInput disabled placeholder="Entity Name " [(ngModel)]="enitiesmodel[in].entityname ">
                                 </mat-form-field>
                             </td>
                             <td>
-                                <mat-form-field *ngFor="let item of myentitiesarray;let in=index" myentitiesarray class="example-full-width">
-                                    <input matInput placeholder="Entity Update" [(ngModel)]="enitiesmodel[in].entityupdate">
+                                <mat-form-field *ngFor="let item of myentitiesarray;let in=index " myentitiesarray class="example-full-width ">
+                                    <input matInput placeholder="Entity Update " [(ngModel)]="enitiesmodel[in].entityupdate ">
                                 </mat-form-field>
                             </td>
+
+                        </tr>
+                        <tr>
+                            <td colspan=100%> <button class="btn btn-success " style="width: 100% " (click)="UpdateTask() ">{{selected}}</button></td>
                         </tr>
                     </table>
 
 
 
-                    <button class="btn btn-success" style="width: 100%" (click)="UpdateTask()">Update</button>
+
                 </div>
             </div>
         </div>

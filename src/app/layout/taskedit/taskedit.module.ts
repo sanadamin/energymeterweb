@@ -1,16 +1,14 @@
-import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { OwnerComponent } from './owner.component';
+import { TaskeditComponent } from './taskedit.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {OwnerRoutingModule} from './owner-routing.module'
+import {TaskEditRoutingModule} from './taskedit-routing.module'
 import { PageHeaderModule } from './../../shared';
 import {CdkTableModule} from '@angular/cdk/table'
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import {
-  
   MatAutocompleteModule,
   MatButtonModule,
   MatButtonToggleModule,
@@ -45,7 +43,7 @@ import {
   MatFormFieldModule,MatCommonModule
 } from '@angular/material';
 @NgModule({
-  imports: [CommonModule, MatCommonModule,OwnerRoutingModule, PageHeaderModule
+  imports: [CommonModule, MatCommonModule,TaskEditRoutingModule, PageHeaderModule
   ,MatTableModule,MatPaginatorModule,MatFormFieldModule,MatInputModule,MatAutocompleteModule,MatButtonModule,MatSelectModule,MatAutocompleteModule,
   MatButtonModule,
   FormsModule,
@@ -82,6 +80,6 @@ import {
   MatStepperModule,
   MatFormFieldModule],
 
-  declarations: [OwnerComponent]
+  declarations: [TaskeditComponent]
 })
-export class OwnerModule {}
+export class TaskEditModule {}

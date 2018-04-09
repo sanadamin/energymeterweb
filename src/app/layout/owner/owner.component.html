@@ -1,45 +1,46 @@
-<div class="row">
-    <div class="col col-xs-12">
-        <div class="card mb-12">
-            <div class="card-header">
-                New Employee
-            </div>
-            <div class="card-body">
+<div [@routerTransition]>
+    <div class="row">
+        <div class="col col-xs-12">
+            <div class="card mb-12">
+                <div class="card-header">
+                    New Employee
+                </div>
+                <div class="card-body">
 
-                <div class="form-group">
-                    <div class="example-container">
+                    <div class="form-group">
+                        <div class="example-container">
 
-                        <!--<ng-select [items]="tasks" bindLabel="name" bindValue="name" placeholder="Task Name" [(ngModel)]="taskName">
+                            <!--<ng-select [items]="tasks" bindLabel="name" bindValue="name" placeholder="Task Name" [(ngModel)]="taskName">
                         </ng-select>-->
-                        <p></p>
-                        <mat-form-field class="col-xs-6">
-                            <input matInput placeholder="Employee Name" [(ngModel)]="empname">
-                        </mat-form-field>
-                        <mat-form-field class="col-xs-6">
-                            <input matInput placeholder="Employee UserName" [(ngModel)]="empusername">
-                        </mat-form-field>
-                        <mat-form-field class="col-xs-6">
-                            <input matInput type="password" placeholder="Employee Password" [(ngModel)]="emppassword">
-                        </mat-form-field>
-                        <mat-form-field class="col-xs-6">
-                            <input matInput placeholder="Employee Eamil" [(ngModel)]="empemail">
-                        </mat-form-field>
-                        <!--<mat-form-field class="col-xs-6">
+                            <p></p>
+                            <mat-form-field class="col-xs-6">
+                                <input matInput placeholder="Employee Name" [(ngModel)]="empname">
+                            </mat-form-field>
+                            <mat-form-field class="col-xs-6">
+                                <input matInput placeholder="Employee UserName" [(ngModel)]="empusername">
+                            </mat-form-field>
+                            <mat-form-field class="col-xs-6">
+                                <input matInput type="password" placeholder="Employee Password" [(ngModel)]="emppassword">
+                            </mat-form-field>
+                            <mat-form-field class="col-xs-6">
+                                <input matInput placeholder="Employee Eamil" [(ngModel)]="empemail">
+                            </mat-form-field>
+                            <!--<mat-form-field class="col-xs-6">
                             <input matInput placeholder="Employee Authority" [(ngModel)]="empauth">
                         </mat-form-field>-->
-                        <ng-select [items]="emps123" bindLabel="name" bindValue="name" placeholder="Select Authority Level" [(ngModel)]="autho">
-                            <ng-template ng-header-tmp>
-                                Select Authority Level
-                            </ng-template>
-                        </ng-select>
-                        <p></p>
-                        <ng-select *ngIf="isloaded" [items]="emps12" bindLabel="name" bindValue="name" placeholder="Select Division" [(ngModel)]="divs">
-                            <ng-template ng-header-tmp>
-                                Division Name
-                            </ng-template>
-                        </ng-select>
-                        <p></p>
-                        <!--<mat-form-field>
+                            <ng-select [items]="emps123" bindLabel="name" bindValue="name" placeholder="Select Authority Level" [(ngModel)]="autho">
+                                <ng-template ng-header-tmp>
+                                    Select Authority Level
+                                </ng-template>
+                            </ng-select>
+                            <p></p>
+                            <ng-select *ngIf="isloaded" [items]="emps12" bindLabel="name" bindValue="name" placeholder="Select Division" [(ngModel)]="divs">
+                                <ng-template ng-header-tmp>
+                                    Division Name
+                                </ng-template>
+                            </ng-select>
+                            <p></p>
+                            <!--<mat-form-field>
                                 <mat-select placeholder="Select Task Category" [(ngModel)]="taskCat">
                                     <mat-option value="Power">Power</mat-option>
                                     <mat-option value="2G">2G</mat-option>
@@ -48,56 +49,57 @@
                                     <mat-option value="MicroWave">MicroWave</mat-option>
                                 </mat-select>
                             </mat-form-field>-->
-                        <!--<ng-select [items]="taskcat1" bindLabel="name" bindValue="name" placeholder="Task Cat" [(ngModel)]="taskCat">
+                            <!--<ng-select [items]="taskcat1" bindLabel="name" bindValue="name" placeholder="Task Cat" [(ngModel)]="taskCat">
                         </ng-select>
                         <p></p>
                         <ng-select [items]="taskcat" bindLabel="name" bindValue="name" placeholder="Employee Name" [(ngModel)]="assignedTo">
                         </ng-select>-->
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
 
-                        <button class="btn btn-info btn-sm " (click)="AddEmp() ">Add Employee</button>
+                            <button class="btn btn-info btn-sm " (click)="AddEmp() ">Add Employee</button>
 
-                        <!--<mat-form-field>
+                            <!--<mat-form-field>
                                 <mat-select placeholder="Select Employee" [(ngModel)]="assignedTo">
                                     <mat-option *ngFor="let emp of empList" value="{{ emp }}">{{emp}}</mat-option>
 
                                 </mat-select>
                             </mat-form-field>-->
+                        </div>
+
                     </div>
 
                 </div>
 
             </div>
-
         </div>
     </div>
-</div>
-<hr>
-<div class="row">
-    <div class="col col-xs-12">
-        <div class="card mb-12">
-            <div class="card-header">
-                Current Employee
-            </div>
-            <div class="card-body">
-                <div class="" *ngFor="let item of currentemp">
-                    <p> {{item.name}}</p>
-                    <hr>
+    <hr>
+    <div class="row">
+        <div class="col col-xs-12">
+            <div class="card mb-12">
+                <div class="card-header">
+                    Current Employee
+                </div>
+                <div class="card-body">
+                    <div class="" *ngFor="let item of currentemp">
+                        <p> {{item.name}}</p>
+                        <hr>
+                    </div>
                 </div>
             </div>
         </div>

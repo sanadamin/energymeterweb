@@ -1,18 +1,16 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
-import { Component, OnInit,ViewChild } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import { ServerService } from './../dashboard/Server.Service';
 
-
 @Component({
-  selector: 'app-record',
-  templateUrl: './record.component.html',
-  styleUrls: ['./record.component.scss'],
-  animations: [routerTransition()]
+  selector: 'app-tasksrecord',
+  templateUrl: './tasksrecord.component.html',
+  styleUrls: ['./tasksrecord.component.scss']
 })
-export class RecordComponent implements OnInit {
- 
+export class TasksrecordComponent implements OnInit {
+
  isClicked =false;
  displayedColumns = ['id','statuscolor',  'progress','date','name','test', 'color','myprogress'];
  dataSource: MatTableDataSource<UserData>;
@@ -29,7 +27,7 @@ export class RecordComponent implements OnInit {
 
   constructor(private serverService:ServerService) {
     // Create 100 users
-    this.serverService.GetAlltasks().subscribe((res)=>{
+    this.serverService.GetAlltasksRecord().subscribe((res)=>{
             
             let s = res.json();
             this.ss = s;
@@ -45,11 +43,10 @@ export class RecordComponent implements OnInit {
               let factor = 0;
               let days = 0;
               let date = new Date();
-              let ddate =new Date(i['duedate']);
-              alert();
-              
-              
-              days = Math.ceil((date.getTime() - ddate.getTime()) / (1000 * 3600 * 24))
+             
+              if(((date.getMonth()+1) - (new Date(i['duedate']).getMonth()+1)) <= 0){
+              days = ((factor+date.getDate()) - (new Date(i['duedate']).getDate()));
+               
                 if(days>0){
                   this.status_Color = "assets/images/red.png";
                 }else{
@@ -61,7 +58,9 @@ export class RecordComponent implements OnInit {
                   
                 }
 
-              
+              }else{
+                this.status_Color = "assets/images/red.png";
+              }
               
             
      
@@ -71,9 +70,9 @@ export class RecordComponent implements OnInit {
               taskSite:i['project'],
               taskStartTime:i['duedate'],
               actiontaken: i['taskownmer'],
-              progress:i['progress'],
+              progress:i['closedate'],
               taskid:i['_id'],
-              statuscolor:this.status_Color
+              statuscolor:i['closestatus']
              })
             }
             
@@ -108,7 +107,7 @@ LoadTask(row)
   this.columns = [];
   this.columns1 = [];
   
-  this.serverService.GetTaskByID(this.tasks[row['id']]['taskid']).subscribe((res)=>{
+  this.serverService.GetTaskRecordByID(this.tasks[row['id']]['taskid']).subscribe((res)=>{
     let  myupdates = res.json();
     let updatesarray1 = myupdates['entitieshistory'];
     let entitiesupdates = myupdates['effectedentities'];
@@ -130,7 +129,7 @@ LoadTask(row)
     
     
   })
-this.serverService.GetTaskByID(this.tasks[row['id']]['taskid']).subscribe((res)=>{
+this.serverService.GetTaskRecordByID(this.tasks[row['id']]['taskid']).subscribe((res)=>{
     let  myupdates = res.json();
     let updatesarray1 = myupdates['effectedentities'];
     let entitiesupdates = myupdates['effectedentities'];

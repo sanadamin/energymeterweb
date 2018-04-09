@@ -37,7 +37,11 @@ const routes: Routes = [
             {path: 'taskconfig',loadChildren:
             './taskconfig/taskconfig.module#TaskConfigModule'},
             {path: 'updatetask',loadChildren:
-            './updatetask/updatetask.module#UpdateTaskModule'}
+            './updatetask/updatetask.module#UpdateTaskModule'},
+            {path: 'taskedit',loadChildren:
+            './taskedit/taskedit.module#TaskEditModule'},
+            {path: 'tasksrecord',loadChildren:
+            './tasksrecord/tasksrecord.module#TasksRecordModule'}
 
         ]
     }

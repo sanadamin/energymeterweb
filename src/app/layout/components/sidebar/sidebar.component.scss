@@ -1,4 +1,4 @@
-$topnav-background-color: #222;
+$topnav-background-color: #2D3437;
 .sidebar {
     border-radius: 0;
     position: fixed;
@@ -25,18 +25,18 @@ $topnav-background-color: #222;
             background: $topnav-background-color;
             border: 0;
             border-radius: 0;
-            color: yellow;
+            color: #D9e838;
             text-decoration: none;
             .fa {
                 margin-right: 10px;
             }
         }
         a:hover {
-            background: darken($topnav-background-color, 5%);
-            color: yellowgreen;
+            background: darken(#BDBDBD, 5%);
+            color: #000000;
         }
         a.router-link-active {
-            background: darken($topnav-background-color, 5%);
+            background: darken(#2D3437, 5%);
             color: #fff;
         }
     }
@@ -69,7 +69,7 @@ $topnav-background-color: #222;
             }
         }
         .panel-title:hover {
-            background: darken($topnav-background-color, 5%);
+            background: darken(#D9e838, 5%);
         }
         .panel-collapse {
             border-radious: 0;
@@ -87,7 +87,7 @@ $topnav-background-color: #222;
                     }
                 }
                 .list-group-item:hover {
-                    background: darken($topnav-background-color, 5%);
+                    background: darken(#fff, 5%);
                 }
             }
         }

@@ -9,7 +9,7 @@ import {NgSelectModule} from '@ng-select/ng-select'
   
   templateUrl: './newtask.component.html',
   styleUrls: ['./newtask.component.scss'],
-  animations: [routerTransition()],
+   animations: [routerTransition()]
     
 
 

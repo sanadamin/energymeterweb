@@ -21,7 +21,7 @@
                                     </mat-form-field>
                                 </td>
                                 <td class="example-full-row">
-                                    <ng-select style="width:100%;padding: 10px" *ngIf="isloaded" [items]="emps1" bindLabel="name" bindValue="name" placeholder="Select Owner" [(ngModel)]="emps">
+                                    <ng-select style="width:100%;padding: 10px" *ngIf="isloaded" [items]="emps1" bindLabel="name" bindValue="name" placeholder="Select Division" [(ngModel)]="emps">
                                         <ng-template ng-header-tmp>
                                             Task Owner
                                         </ng-template>
@@ -57,6 +57,13 @@
 
                                 </td>
                                 <td>
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="dp4" placeholder="Entity Due Date" [(ngModel)]="entityduedate">
+                                        <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+                                        <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+                                    </mat-form-field>
+                                </td>
+                                <td class="example-full-row">
                                     <button style="padding:10px" class="btn btn-info" (click)="AddEntity()">Add Entity</button>
 
                                 </td>

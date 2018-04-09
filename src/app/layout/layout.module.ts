@@ -28,6 +28,8 @@ import { DivisionsComponent } from './divisions/divisions.component';
 import { TaskcontrolComponent } from './taskcontrol/taskcontrol.component';
 import { TaskconfigComponent } from './taskconfig/taskconfig.component';
 import { UpdatetaskComponent } from './updatetask/updatetask.component';
+import { TaskeditComponent } from './taskedit/taskedit.component';
+import { TasksrecordComponent } from './tasksrecord/tasksrecord.component';
 
 @NgModule({
     imports: [

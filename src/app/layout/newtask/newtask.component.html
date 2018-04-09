@@ -69,26 +69,28 @@
             </div>
         </div>
     </div>
-</div>
-<div class="example-container ">
+
+    <div class="example-container ">
 
 
-    <div class="col-xs-12">
-        <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+        <div class="col-xs-12">
+            <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+        </div>
     </div>
-</div>
-<hr>
+    <hr>
 
-<div class="row">
-    <div class="col col-xs-12">
-        <div class="card xs-12">
-            <div class="card-header">
-                Upload Task CSV
-            </div>
-            <div class="card-body">
+    <div class="row">
+        <div class="col col-xs-12">
+            <div class="card xs-12">
+                <div class="card-header">
+                    Upload Task CSV
+                </div>
+                <div class="card-body">
 
-                <input type="file" class="btn btn-danger" (change)="changeListener($event.target.files)">
+                    <input type="file" class="btn btn-danger" (change)="changeListener($event.target.files)">
+                </div>
             </div>
         </div>
     </div>
+</div>
 </div>

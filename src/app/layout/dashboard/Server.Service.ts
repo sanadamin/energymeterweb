@@ -24,6 +24,13 @@ AddTask(){
 	"emplong":""
 })
 }
+CloseTask(taskid:string,closingstatus:string,closer:string){
+return this.http.put('http://127.0.0.1:3005/api/v1/devision/closetask',{
+		"taskid":taskid,
+	"closestatus":closingstatus,
+	"closer":closer
+})
+}
 getSiteList(){
 	return this.http.get('http://212.118.13.26/api/v1/sites');
 }
@@ -83,6 +90,15 @@ DeleteTask(id:string){
 GetAlltasks(){
 	return this.http.get('http://127.0.0.1:3005/api/v1/devision/');
 }
+GetAlltasksRecord(){
+	return this.http.get('http://127.0.0.1:3005/api/v1/devisionrecord/');
+}
+GetAlltasks1(name:string){
+	return this.http.get('http://127.0.0.1:3005/api/v1/devision/findempdiv/'+name)
+}
+GetAlltasks2(name:string){
+	return this.http.get('http://127.0.0.1:3005/api/v1/devision/findtaskbydiv/'+name)
+}
 AddDivision(name:string){
 	return this.http.post('http://127.0.0.1:3005/api/v1/ownerdivision/adddiv',{"name":name});
 
@@ -124,6 +140,9 @@ AddOwner(name:string, username:string,password:string,email:string,auth:string){
 GetTaskByID(id:string){
 	return this.http.get('http://127.0.0.1:3005/api/v1/devision/find/'+id);
 }
+GetTaskRecordByID(id:string){
+	return this.http.get('http://127.0.0.1:3005/api/v1/devisionrecord/find/'+id);
+}
 AddTaskTracker(taskname:string,description:string,taskowner:string,tasktype:string,project:string,duedate:string,entityarray:any){
 	return this.http.post('http://127.0.0.1:3005/api/v1/devision/add',{
 		"taskname":taskname,
@@ -132,22 +151,37 @@ AddTaskTracker(taskname:string,description:string,taskowner:string,tasktype:stri
 		"tasktype":tasktype,
 		"project": project,
 		"duedate":duedate,
-		"entities":entityarray
-		
+		"entities":entityarray,
+
+
 	})
 
 }
-UpdateTaskTracker(taskid:string,progress:string,duedate:string,relatedpr:string,relatedpo:string,update:string,updater:string,entityupdate:any){
+UpdateTaskTracker(taskid:string,progress:string,duedate:string,relatedpr:string,relatedpo:string,update:string,updater:string,entityupdate:any,prstatus:string,ponumber:string,postatus:string,actualbudget:string,budgetreserved:string,budgetline:string){
 	return this.http.put('http://127.0.0.1:3005/api/v1/devision/updatetask',{
 			"taskid":taskid,
 	"progress":progress,
 	"duedate":duedate,
-	"relatedpr":relatedpr,
+	"prnumber":relatedpr,
+	"prstatus":prstatus,
+	"ponumber":ponumber,
+	"postatus":postatus,
 	"relatedpo":relatedpo,
 	"name":updater,
+	"budgetline":budgetline,
+	"budgetreserved":budgetreserved,
+	"actualbudget":actualbudget,
 	"update":entityupdate
 
 	});
+}
+AddEntity(taskid:string, entityname:string, updater:string){
+return this.http.put('http://127.0.0.1:3005/api/v1/devision/addentity',{
+	"taskid":taskid,
+	"entityname":entityname,
+	"entityupdate":'',
+	"updater": updater 
+})
 }
 UpdateTaskHistory(taskid:string,entityhistory:any){
 	return this.http.put('http://127.0.0.1:3005/api/v1/devision/updatehistory',{
