@@ -4,21 +4,22 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import { routerTransition } from '../../router.animations';
 
 @Component({
-  selector: 'app-updatetask',
-  templateUrl: './updatetask.component.html',
-  styleUrls: ['./updatetask.component.scss'],
-    animations: [routerTransition()]
-
+  selector: 'app-pendingtasks',
+  templateUrl: './pendingtasks.component.html',
+  styleUrls: ['./pendingtasks.component.scss']
 })
-export class UpdatetaskComponent implements OnInit {
+export class PendingtasksComponent implements OnInit {
   isClicked = false;
   Taskid='';
   pendingchoices:any[] = [];
   pendingchoice:string = '';
+  pendingid = '';
   pendingArray:any [] = [];
   enitiesmodel:entity[] = [];
   entitieshistory:entity1[] = [];
   budgetline = '';
+  parenttask = '';
+  assignedby = '';
   isPending = false;
   budgetreserved = '';
   actualbudget = '';
@@ -27,12 +28,14 @@ export class UpdatetaskComponent implements OnInit {
   RelatedPR = '';
   PRnumber = '';
   PRStatus = '';
+  PendingFeedback = '';
   RelatedPO = '';
   PONumber = '';
   POStatus = '';
   duedate = '';
   taskdelegate = '';
   prstatus = '';
+  PendingTaskId = '';
   project = '';
   myentitiesarray=[];
   ispendingloaded = false;
@@ -44,7 +47,7 @@ export class UpdatetaskComponent implements OnInit {
   myres: tasks[] = [];
   lastupdate = '';
   isloaded = false;
-  displayedColumns = ['id', 'name', 'progress', 'color'];
+  displayedColumns = ['id', 'name', 'progress','status'];
   dataSource: MatTableDataSource<UserData>;
 
 
@@ -77,12 +80,14 @@ export class UpdatetaskComponent implements OnInit {
           let myres22 = res.json();
           let myind = 0;
           for(let j of myres22){
-             this.serverService.GetAlltasks2(j['name']).subscribe((res)=>{
+             this.serverService.GetAlltasksPending(j['name']).subscribe((res)=>{
       let myres1 = res.json();
-      
+      console.log(myres1);
       for (let s of myres1){
-        this.myres.push({id:s['_id'],taskname:s['taskname'],description:s['description'],progress:s['progress'],taskid:s['_id']});
-        users.push(createNewUser(myind,s['taskname'],s['description'],s['progress'],s['taskid']));
+        
+        this.myres.push({id:s['_id'],taskname:s['taskdescription'],description:s['taskdescription'],progress:s['progress'],pendingid:s['pendingid'],taskid:s['taskid']});
+        users.push(createNewUser(myind,s['taskdescription'],s['startdate'],s['progress'],s['taskid'],s['status']));
+       
         this.dataSource = new MatTableDataSource(users);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -109,55 +114,28 @@ this.serverService.getEmps().subscribe((res)=>{
     })
    }
 LoadTask(row){
-  console.log(row.id);
- 
-  this.serverService.GetTaskByID(this.myres[row.id]['taskid']).subscribe((res)=>{
+    this.pendingid = this.myres[row.id]['pendingid'];
+    this.Taskid = this.myres[row.id]['taskid'];  
+    this.PendingTaskId = this.myres[row.id]['id'];
+    this.serverService.GetPendingByID(this.myres[row.id]['id']).subscribe((res)=>{
     let thisres = res.json();
-    this.Taskid= thisres['_id'];
-    this.TaskName = thisres['taskname'];
-    this.progress = thisres['progress'];
-    this.duedate = thisres['duedate'];
-    this.PRnumber = thisres['relatedpr']['prnumber'];
-    this.PRStatus = thisres['relatedpr']['prstatus'];
-    this.PONumber = thisres['relatedpo']['ponumber'];
-    this.POStatus = thisres['relatedpo']['postatus'];
-     this.budgetline = thisres['budgetline'];
-    this.actualbudget = thisres['actualbudget'];
-    this.budgetreserved = thisres['budgetamount'];
-    for(let s of thisres['updates']){
-      this.lastupdate = s['value'];
-     
-    }
-    this.myentitiesarray =[];
-    this.enitiesmodel = [];
-    this.entitieshistory = [];
-    this.pendingArray = [];
-    for(let i of thisres['effectedentities']){
-      this.myentitiesarray.push({entityname:i['entityname'],entityupdate:i['entityupdate'],entitydueduate:i['entityduedate']});
-      this.enitiesmodel.push({entityname:i['entityname'],entityupdate:i['entityupdate'], entityduedate:i['entityduedate'],updater:localStorage.getItem('userName')});
-      console.log("123123123"+this.enitiesmodel[0]['updater']);
-      this.entitieshistory.push({entityname:i['entityname'],entityupdate:i['entityupdate'],entityduedate:i['entityduedate']});
-    //  alert(this.enitiesmodel[0].entityname);
-  }
-  for(let i of thisres['pending']){
-    if(i['pendingon']){
-      this.isPending = true;
-      this.pendingArray.push({pendingon:i['pendingon'],subtask:i['subtask'],startdate:i['startdate'],enddate:i['enddate'],result:i['feedback']});
-      
-    }
-    
-  }
-  this.Updatedescription = this.lastupdate;
-  this.isClicked = true;
+    this.TaskName = thisres['taskdescription'];
+    this.progress = thisres['startdate'];
+    this.serverService.GetTaskByID(this.Taskid).subscribe((res)=>{
+    let taskres = res.json();
+    this.parenttask = taskres['taskname'];
+    this.assignedby = taskres['taskownmer'];
+    })
+    this.isClicked = true;
   })
 }
   ngOnInit() {
   }
 DelegateTo(){
   this.serverService.UpdatePedning(this.Taskid,this.pendingchoice,this.taskdelegate).subscribe((res)=>{
-    alert('Task ' + this.taskdelegate + ' Delgated');
+    
     this.serverService.AddPending(this.Taskid,this.pendingchoice,this.taskdelegate,'').subscribe((res)=>{
-    alert('Task Delegated');
+   alert('Task ' + this.taskdelegate + ' Delgated');
     this.serverService.getEmps().subscribe((res)=>{
       console.log(res.json());
         let empJson = res.json();
@@ -177,12 +155,54 @@ DelegateTo(){
   
 }
   UpdateTask(){
-  
+    
     let username = localStorage.getItem('userName');
-     this.serverService.UpdateTaskHistory(this.Taskid,this.entitieshistory).subscribe((res)=>{
-       alert(this.PONumber);
-      this.serverService.UpdateTaskTracker(this.Taskid,this.progress,this.duedate,this.PRnumber,this.RelatedPO,this.Updatedescription,username,this.enitiesmodel,this.PRStatus,this.PONumber,this.POStatus,this.actualbudget,this.budgetreserved,this.budgetline).subscribe((res)=>{
-alert('Task Updated');
+    this.serverService.UpdatePendingTask(this.Taskid,this.pendingid,this.PendingFeedback,this.PendingTaskId).subscribe((res)=>{
+    alert('Delegated Task Done');
+     this.serverService.getDivs().subscribe((res)=>{
+      
+        let empJson = res.json();
+        let ind = 0;
+        for (let emp of empJson){
+          this.pendingchoices.push({id: ind,name: emp['name']});
+          ind++;
+        }
+       
+         this.ispendingloaded = true;
+         this.emps1 = [...this.emps1];
+    })
+     const users: UserData[] = [];
+    for (let i = 1; i <= 100; i++) { ; }
+
+    // Assign the data to the data source for the table to render
+    this.serverService.getempdata(localStorage.getItem('userName')).subscribe((res)=>{
+            
+          let newres = res.json();
+          this.employeename = newres['name'];  
+          this.serverService.GetAlltasks1(this.employeename).subscribe((res)=>{
+          let myres22 = res.json();
+          let myind = 0;
+          for(let j of myres22){
+             this.serverService.GetAlltasksPending(j['name']).subscribe((res)=>{
+      let myres1 = res.json();
+      console.log(myres1);
+      for (let s of myres1){
+        
+        this.myres.push({id:s['_id'],taskname:s['taskdescription'],description:s['taskdescription'],progress:s['progress'],pendingid:s['pendingid'],taskid:s['taskid']});
+        users.push(createNewUser(myind,s['taskdescription'],s['startdate'],s['progress'],s['taskid'],s['status']));
+       
+        this.dataSource = new MatTableDataSource(users);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        myind++;
+      }
+    })
+          }
+        });
+      
+        });
+        
+    
 this.serverService.getEmps().subscribe((res)=>{
       console.log(res.json());
         let empJson = res.json();
@@ -191,16 +211,13 @@ this.serverService.getEmps().subscribe((res)=>{
           this.emps1.push({id: ind,name: emp['name']});
           ind++;
         }
-         this.isClicked = false;
+       
          this.isloaded = true;
          this.emps1 = [...this.emps1];
     })
-this.isClicked = false;
-this.entitieshistory = [];
-      })
-      
-    });
-  
+  })
+  this.isClicked = false;
+  this.PendingFeedback = '';
   }
 // ngAfterViewInit() {
 //     this.dataSource.paginator = this.paginator;
@@ -218,9 +235,11 @@ interface tasks{
   taskname:string,
   description:string,
   progress: string,
-  taskid : string
+  pendingid : string,
+  taskid: string
+
 }
-function createNewUser(id: number,taskname: string,taskdescription:string,progress:string, taskid:string): UserData {
+function createNewUser(id: number,taskname: string,taskdescription:string,progress:string, taskid:string, status:string): UserData {
   
 
   return {
@@ -228,7 +247,8 @@ function createNewUser(id: number,taskname: string,taskdescription:string,progre
     name: taskname,
     progress: taskdescription,
     color: progress,
-    taskid: taskid
+    pendingid: taskid,
+    status: status
   };
 }
 
@@ -244,7 +264,8 @@ export interface UserData {
   name: string;
   progress: string;
   color: string;
-  taskid: string;
+  pendingid: string;
+  status: string;
 }
 interface employee {
    id:number,

@@ -13,69 +13,81 @@
                         </ng-select>-->
 
                         <p></p>
-                        <table class="example-full-width" cellspacing="10">
-                            <tr>
-                                <td class="example-full-row">
-                                    <mat-form-field>
-                                        <input matInput placeholder="Task Name" [(ngModel)]="TaskName">
-                                    </mat-form-field>
-                                </td>
-                                <td class="example-full-row">
-                                    <ng-select style="width:100%;padding: 10px" *ngIf="isloaded" [items]="emps1" bindLabel="name" bindValue="name" placeholder="Select Division" [(ngModel)]="emps">
-                                        <ng-template ng-header-tmp>
-                                            Task Owner
-                                        </ng-template>
-                                    </ng-select>
-                                </td>
-                            </tr>
+                        <div class="table-responsive">
+                            <table class="example-full-width" cellspacing="10">
+                                <tr>
+                                    <td class="example-full-row">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Task Name" [(ngModel)]="TaskName">
+                                        </mat-form-field>
+                                    </td>
+                                    <td class="example-full-row">
+                                        <ng-select style="width:100%;padding: 10px" *ngIf="isloaded" [items]="emps1" bindLabel="name" bindValue="name" placeholder="Select Division" [(ngModel)]="emps">
+                                            <ng-template ng-header-tmp>
+                                                Task Owner
+                                            </ng-template>
+                                        </ng-select>
+                                    </td>
+                                </tr>
 
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input matInput placeholder="Task Type" [(ngModel)]="Tasktype">
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input matInput [matDatepicker]="dp3" placeholder="Due Date" disabled [(ngModel)]="duedate">
-                                        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-                                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input matInput placeholder="Project Name" [(ngModel)]="project">
-                                    </mat-form-field>
+                                <tr>
+                                    <td>
+                                        <mat-form-field>
 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input matInput placeholder="Related Entities" [(ngModel)]="entities">
-                                    </mat-form-field>
+                                            <mat-select placeholder="Select Task Type" [(ngModel)]="Tasktype">
+                                                <mat-option value="Task">Task</mat-option>
+                                                <mat-option value="Project">Project</mat-option>
+                                                <mat-option value="Optimization Action">Optimization Action</mat-option>
+                                                <mat-option value="Management Request">Management Request</mat-option>
+                                                <mat-option value="Incident">Incident</mat-option>
+                                                <mat-option value="Audit Risk">Audit Risk</mat-option>
+                                                <mat-option value="Challenge">Challenge</mat-option>
+                                            </mat-select>
 
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input matInput [matDatepicker]="dp4" placeholder="Entity Due Date" [(ngModel)]="entityduedate">
-                                        <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
-                                        <mat-datepicker #dp4 disabled="false"></mat-datepicker>
-                                    </mat-form-field>
-                                </td>
-                                <td class="example-full-row">
-                                    <button style="padding:10px" class="btn btn-info" (click)="AddEntity()">Add Entity</button>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field>
+                                            <input matInput [matDatepicker]="dp3" placeholder="Due Date" disabled [(ngModel)]="duedate">
+                                            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                                            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                                        </mat-form-field>
+                                    </td>
 
-                                </td>
-                                <td>
-                                    <mat-form-field *ngIf="isShown">
-                                        <input matInput placeholder="Related Entities" disabled [(ngModel)]="entitiesvalues">
-                                    </mat-form-field>
+                                    <td>
+                                        <mat-form-field>
+                                            <input matInput placeholder="Project Name" [(ngModel)]="project">
+                                        </mat-form-field>
 
-                                </td>
-                            </tr>
-                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <mat-form-field>
+                                            <input matInput placeholder="Related Entities" [(ngModel)]="entities">
+                                        </mat-form-field>
 
+                                    </td>
+                                    <td>
+                                        <mat-form-field>
+                                            <input matInput [matDatepicker]="dp4" placeholder="Entity Due Date" [(ngModel)]="entityduedate">
+                                            <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+                                            <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+                                        </mat-form-field>
+                                    </td>
+                                    <td class="example-full-row">
+                                        <button style="padding:10px" class="btn btn-info" (click)="AddEntity()">Add Entity</button>
+
+                                    </td>
+                                    <td>
+                                        <mat-form-field *ngIf="isShown">
+                                            <input matInput placeholder="Related Entities" disabled [(ngModel)]="entitiesvalues">
+                                        </mat-form-field>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                         <mat-form-field class="example-full-width">
                             <input matInput placeholder="Task Description" [(ngModel)]="Taskdescription">
                         </mat-form-field>

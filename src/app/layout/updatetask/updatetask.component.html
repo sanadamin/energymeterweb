@@ -80,105 +80,176 @@
                     Update Tasks
                 </div>
                 <div class="card-body">
-                    <table class="example-full-width" cellspacing="10">
-                        <tr>
+                    <div class="table-responsive">
+                        <table class="example-full-width" cellspacing="10">
+                            <tr>
 
-                            <td class="example-full-row">
-                                <mat-form-field>
-                                    <input matInput placeholder="Task Name" disabled value="Google" [(ngModel)]="TaskName">
-                                </mat-form-field>
-                            </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Task Name" disabled value="Google" [(ngModel)]="TaskName">
+                                    </mat-form-field>
+                                </td>
 
-                            <td class="example-full-row">
-                                <mat-form-field>
-                                    <input matInput type="number" placeholder="Progress (0-100)%" [(ngModel)]="progress">
-                                </mat-form-field>
-                            </td>
-                            <td class="example-full-row">
-                                <!--<ng-select style="width:100%;padding: 10px" *ngIf="isloaded" [items]="emps1" bindLabel="name" bindValue="name" placeholder="Select Owner" [(ngModel)]="emps">
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput type="number" placeholder="Progress (0-100)%" [(ngModel)]="progress">
+                                    </mat-form-field>
+                                </td>
+                                <!--<td >
+                                    <!--<ng-select style="width:100%;padding: 10px" *ngIf="isloaded" [items]="emps1" bindLabel="name" bindValue="name" placeholder="Select Owner" [(ngModel)]="emps">
                                 <ng-template ng-header-tmp>
                                     Task Owner
                                 </ng-template>
-                            </ng-select>-->
-                            </td>
-                        </tr>
+                            </ng-select>
+                                </td>-->
 
-                        <tr>
-                            <td>
-                                <mat-form-field>
-                                    <input matInput [matDatepicker]="dp3" placeholder="Due Date" disabled [(ngModel)]="duedate">
-                                    <mat-datepicker-toggle disabled matSuffix [for]="dp3"></mat-datepicker-toggle>
-                                    <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-                                </mat-form-field>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <mat-form-field>
-                                    <input matInput placeholder="Related PR" [(ngModel)]="PRnumber">
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field>
-                                    <input matInput placeholder="PR Status" [(ngModel)]="PRStatus">
-                                </mat-form-field>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <mat-form-field>
-                                    <input matInput placeholder="Related PO" [(ngModel)]="PONumber">
-                                </mat-form-field>
 
-                            </td>
-                            <td>
-                                <mat-form-field>
-                                    <input matInput placeholder="Related PO" [(ngModel)]="POStatus">
-                                </mat-form-field>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <mat-form-field>
-                                    <input matInput placeholder="Budget Line" [(ngModel)]="budgetline">
-                                </mat-form-field>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="dp3" placeholder="Due Date" disabled [(ngModel)]="duedate">
+                                        <mat-datepicker-toggle disabled matSuffix [for]="dp3"></mat-datepicker-toggle>
+                                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan=100%>
+                                    <hr style="width: 100%">
+                                </td>
+                            </tr>
 
-                            </td>
-                            <td>
-                                <mat-form-field>
-                                    <input matInput placeholder="Reserved Budget" [(ngModel)]="budgetreserved">
-                                </mat-form-field>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Related PR" [(ngModel)]="PRnumber">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="PR Status" [(ngModel)]="PRStatus">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Related PO" [(ngModel)]="PONumber">
+                                    </mat-form-field>
 
-                            </td>
-                            <td>
-                                <mat-form-field>
-                                    <input matInput placeholder="Actual Budget" [(ngModel)]="actualbudget">
-                                </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Related PO" [(ngModel)]="POStatus">
+                                    </mat-form-field>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <mat-form-field *ngFor="let item of myentitiesarray;let in=index" myentitiesarray class="example-full-width">
-                                    <input matInput disabled placeholder="Entity Name" [(ngModel)]="enitiesmodel[in].entityname">
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field *ngFor="let item of myentitiesarray;let in=index" myentitiesarray class="example-full-width">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Budget Line" [(ngModel)]="budgetline">
+                                    </mat-form-field>
 
-                                    <input matInput [matDatepicker]="dp4" placeholder="Due Date" disabled [(ngModel)]="enitiesmodel[in].entityduedate">
-                                    <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
-                                    <mat-datepicker #dp4 disabled="false"></mat-datepicker>
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field *ngFor="let item of myentitiesarray;let in=index" myentitiesarray class="example-full-width">
-                                    <input matInput placeholder="Entity Update" [(ngModel)]="enitiesmodel[in].entityupdate">
-                                </mat-form-field>
-                            </td>
-                        </tr>
-                    </table>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Reserved Budget" [(ngModel)]="budgetreserved">
+                                    </mat-form-field>
+
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Actual Budget" [(ngModel)]="actualbudget">
+                                    </mat-form-field>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan=100%>
+                                    <hr style="width: 100%">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field *ngFor="let item of myentitiesarray;let in=index" myentitiesarray class="example-full-width">
+                                        <input matInput disabled placeholder="Entity Name" [(ngModel)]="enitiesmodel[in].entityname">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field *ngFor="let item of myentitiesarray;let in=index" myentitiesarray class="example-full-width">
+
+                                        <input matInput [matDatepicker]="dp4" placeholder="Due Date" disabled [(ngModel)]="enitiesmodel[in].entityduedate">
+                                        <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+                                        <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field *ngFor="let item of myentitiesarray;let in=index" myentitiesarray class="example-full-width">
+                                        <input matInput placeholder="Entity Update" [(ngModel)]="enitiesmodel[in].entityupdate">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan=100%>
+                                    <hr style="width: 100%">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <ng-select style="width:100%;padding: 10px" *ngIf="ispendingloaded" [items]="pendingchoices" bindLabel="name" bindValue="name" placeholder="Select Rspoonsible Devision" [(ngModel)]="pendingchoice">
+                                        <ng-template ng-header-tmp>
+                                            Select Rspoonsible Devision
+                                        </ng-template>
+                                    </ng-select>
+
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Task To Delegate" [(ngModel)]="taskdelegate">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <button class="btn btn-warning" style="width: 100%" (click)="DelegateTo()">Delegate To</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan=100%>
+                                    <div class="table-responsive" style="height: 250px">
+                                        <table *ngIf="isPending">
+                                            <tr *ngFor="let item1 of pendingArray;let in1 =index">
+                                                <td *ngIf="isPending">
+                                                    <mat-form-field>
+                                                        <input matInput placeholder="Pending Devision" disabled [(ngModel)]="pendingArray[in1].pendingon">
+                                                    </mat-form-field>
+                                                </td>
+
+                                                <td *ngIf="isPending">
+                                                    <mat-form-field>
+                                                        <input matInput placeholder="Assigned Task Start Date" disabled [(ngModel)]="pendingArray[in1].startdate">
+                                                    </mat-form-field>
+                                                </td>
+                                                <td *ngIf="isPending">
+                                                    <mat-form-field>
+                                                        <input matInput placeholder="Assigned Task End Date" disabled [(ngModel)]="pendingArray[in1].enddate">
+                                                    </mat-form-field>
+                                                </td>
+                                                <td *ngIf="isPending">
+                                                    <mat-form-field>
+                                                        <input matInput placeholder="Pending Task" disabled [(ngModel)]="pendingArray[in1].subtask">
+                                                    </mat-form-field>
+                                                </td>
+                                                <td *ngIf="isPending">
+                                                    <mat-form-field>
+                                                        <input matInput placeholder="Pending Task" disabled [(ngModel)]="pendingArray[in1].result">
+                                                    </mat-form-field>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                            </tr>
+                        </table>
+                    </div>
 
 
 

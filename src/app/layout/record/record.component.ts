@@ -60,9 +60,39 @@ export class RecordComponent implements OnInit {
                   }
                   
                 }
-
+let entitystring = '';
+let prstring = '';
+let postring = '';
+let effectedentitiesstring = '';
+for(let entity of i['entitieshistory']){
+  entitystring = entitystring + entity['entityname'] +'%$#' + entity['entityupdate'] +'%$#' + entity['entityduedate'] + '\n'; 
+}
+for(let pr of i['relatedpr']){
+  prstring = prstring + pr['prnumber'] +'%$#' + pr['prstatus']  + '\n'; 
+}
+for(let pr of i['relatedpo']){
+  postring = postring + pr['ponumber'] +'%$#' + pr['postatus'] + '\n'; 
+}
+for(let eent of i['effectedentities']){
+  effectedentitiesstring = effectedentitiesstring + eent['entityname'] +'%$#' + eent['entityupdate'] +'%$#' + eent['dateofupdate'] +'%$#'+eent['updater'] +'%$#'+eent['entityduedate'] +'%$#' + '\n'; 
+}
               
-              
+              this.recordTemplate.push({
+duedate: i['duedate'],
+  taskdate: i['taskdate'],
+  project: i['project'],
+  tasktype: i['tasktype'],
+  taskowner: i['taskowner'],
+  description:i['description'],
+  taskname:i['taskname'],
+  closer: i['closer'],
+  closestatus: i['closestatus'],
+  closedate:i['closedate'],
+  relatedpr:prstring,
+  relatedpo:postring,
+  entitieshistory:entitystring,
+  effectedentities:effectedentitiesstring
+              });
             
      
             this.tasks.push({
@@ -187,7 +217,8 @@ OnAddTask(){
     this.dataSource.paginator = this.paginator;
 
   }
-  eventClicked(){
+eventClicked(){
+  this
 new Angular2Csv(this.recordTemplate, 'My Report',{headers: ['Date','Employee Name','Site Name','Task Category','Task Name','Consumed Time','Charging Time','Action Taken','Approved By','Start Time','Acknowledge Time','Site Entered Time','Closing Time']});
   }
   
@@ -251,19 +282,20 @@ interface task{
 }
 
 interface recordTemp{
-  taskDate: String,
-  empName: String,
-  siteName: String,
-  taskcat: String,
-  taskName: String,
-  consumedTime:String,
-  chargingHours:String,
-  actionTaken: String,
-  approvedBy: String,
-  startTime:String,
-  ackTime:String,
-  enteredtime:String,
-  closingTime:String,
+  duedate: String,
+  taskdate: String,
+  project: String,
+  tasktype: String,
+  taskowner: String,
+  description:String,
+  taskname:String,
+  closer: String,
+  closestatus: String,
+  closedate:String,
+  relatedpr:String,
+  relatedpo:String,
+  entitieshistory:String,
+  effectedentities:string
 
  
 }
@@ -271,4 +303,10 @@ interface updates{
   update:string,
   date:string,
   updater:string
+}
+
+interface history{
+  entityname:   string,
+  entityupdate: string,
+  entityduedate:string
 }

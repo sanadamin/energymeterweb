@@ -1,0 +1,120 @@
+<div [@routerTransition]>
+
+    <div class="row">
+        <div class="col col-xs-12">
+            <div class="card mb-12">
+                <div class="card-header">
+                    Current Tasks
+                </div>
+                <div class="card-body">
+                    <div [@routerTransition]>
+                        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+                    </div>
+
+                    <div class="example-header">
+                        <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="example-container mat-elevation-z8">
+
+                        <mat-table [dataSource]="dataSource" matSort>
+                            <ng-container matColumnDef="select">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Select </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> <input type="checkbox" name="vehicle" value="Bike" (click)="check(row)"> </mat-cell>
+                            </ng-container>
+
+
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Index </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="progress">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Task Name </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.progress}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Task Description </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="status">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+                            </ng-container>
+
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="LoadTask(row)" style="cursor: pointer">
+                            </mat-row>
+                        </mat-table>
+
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row" *ngIf="isClicked">
+        <div class="col col-xs-12">
+            <div class="card mb-12">
+                <div class="card-header">
+                    Update Tasks
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="example-full-width" cellspacing="10">
+                            <tr>
+
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Task Description" disabled value="Google" [(ngModel)]="TaskName">
+                                    </mat-form-field>
+                                </td>
+
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput type="text" disabled placeholder="Start Date" [(ngModel)]="progress">
+                                    </mat-form-field>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput type="text" disabled placeholder="Parent Task" [(ngModel)]="parenttask">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput type="text" disabled placeholder="Assigned By" [(ngModel)]="assignedby">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan=100%>
+                                    <mat-form-field>
+                                        <input matInput type="text" placeholder="Feedback" [(ngModel)]="PendingFeedback">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+
+
+                    <button class="btn btn-success" style="width: 100%" (click)="UpdateTask()">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>

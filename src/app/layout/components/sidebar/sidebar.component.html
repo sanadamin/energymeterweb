@@ -16,6 +16,9 @@
         <a [routerLink]="['/record']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-book"></i>&nbsp;{{ 'Current Tasks' | translate }}
         </a>
+        <a [routerLink]="['/pendingtasks']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-hourglass"></i>&nbsp;{{ 'Delegated Tasks' | translate }}
+        </a>
         <a [routerLink]="['/tasksrecord']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="isAdmin">
             <i class="fa fa-fw fa-database"></i>&nbsp;{{ 'Record' | translate }}
         </a>

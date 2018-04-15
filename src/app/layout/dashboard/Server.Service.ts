@@ -96,6 +96,9 @@ GetAlltasksRecord(){
 GetAlltasks1(name:string){
 	return this.http.get('http://127.0.0.1:3005/api/v1/devision/findempdiv/'+name)
 }
+GetAlltasksPending(name:string){
+	return this.http.get('http://127.0.0.1:3005/api/v1/pending/returndiv/'+name);
+}
 GetAlltasks2(name:string){
 	return this.http.get('http://127.0.0.1:3005/api/v1/devision/findtaskbydiv/'+name)
 }
@@ -128,7 +131,7 @@ updatedivisionEmp(divisionname: string, employeename: string){
 	})
 }
 AddOwner(name:string, username:string,password:string,email:string,auth:string){
-	return this.http.post('http://127.0.0.1:3005/api/v1/owner/add',{
+	return this.http.post('	http://127.0.0.1:3005/api/v1/owner/add',{
 		"name":name,
 	"username":username,
 	"password":password,
@@ -137,8 +140,12 @@ AddOwner(name:string, username:string,password:string,email:string,auth:string){
 
 	});
 }
+
 GetTaskByID(id:string){
 	return this.http.get('http://127.0.0.1:3005/api/v1/devision/find/'+id);
+}
+GetPendingByID(id:string){
+	return this.http.get('http://127.0.0.1:3005/api/v1/pending/find/'+id);
 }
 GetTaskRecordByID(id:string){
 	return this.http.get('http://127.0.0.1:3005/api/v1/devisionrecord/find/'+id);
@@ -154,6 +161,32 @@ AddTaskTracker(taskname:string,description:string,taskowner:string,tasktype:stri
 		"entities":entityarray,
 
 
+	})
+
+}
+UpdatePendingTask(taskid:string, pendingid:string, feedback:string,pendingtaskid:string){
+return this.http.put('http://127.0.0.1:3005/api/v1/devision/findpending',{
+	"taskid":taskid,
+	"pendingid":pendingid,
+	"pendingtaskid":pendingtaskid,
+	"feedback":feedback});
+
+}
+UpdatePedning(taskid:string,pendingon:string,subtask:string){
+	return this.http.post('http://127.0.0.1:3005/api/v1/devision/updatepending',{
+		"taskid":taskid,
+		"pendingon":pendingon,
+		"taskdelegate":subtask,
+		"taskdescription":subtask,
+		"feedback":""
+	})
+}
+AddPending(taskid:string,pendingon:string,taskdescription:string,feedback:string){
+	return this.http.post('http://127.0.0.1:3005/api/v1/pending/addpending',{
+		"taskid":taskid,
+		"pendingon": pendingon,
+		"taskdescription":taskdescription,
+		"feedback":""
 	})
 
 }

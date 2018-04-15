@@ -30,6 +30,7 @@ import { TaskconfigComponent } from './taskconfig/taskconfig.component';
 import { UpdatetaskComponent } from './updatetask/updatetask.component';
 import { TaskeditComponent } from './taskedit/taskedit.component';
 import { TasksrecordComponent } from './tasksrecord/tasksrecord.component';
+import { PendingtasksComponent } from './pendingtasks/pendingtasks.component';
 
 @NgModule({
     imports: [

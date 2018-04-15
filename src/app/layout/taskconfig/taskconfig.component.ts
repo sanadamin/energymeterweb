@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ServerService } from './../dashboard/Server.Service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TaskconfigComponent implements OnInit {
   TaskName = '';
+  pendingon = '';
   Taskdescription = '';
   isloaded = false;
   entityduedate = '';
@@ -20,7 +22,7 @@ export class TaskconfigComponent implements OnInit {
   enityarray:entity[] = [];
   emps: string = 'Please Select Employee';
   emps1:employee[] = [];
-  constructor(private serverService:ServerService) {
+  constructor(private serverService:ServerService,private router:Router) {
        this.serverService.getDivs().subscribe((res)=>{
       console.log(res.json());
         let empJson = res.json();
@@ -51,6 +53,15 @@ AddEntity(){
    if(this.TaskName&&this.Tasktype&&this.Taskdescription&&this.duedate&&this.project&&this.emps){
     this.serverService.AddTaskTracker(this.TaskName,this.Taskdescription,this.emps,this.Tasktype,this.project,this.duedate,this.enityarray).subscribe((res)=>{
       alert('Task Created Successfully');
+      this.TaskName = '';
+      this.Taskdescription = '';
+      this.emps = '';
+      this.Tasktype = '';
+      this.project = '';
+      this.enityarray = [];
+      this.router.navigate(['/record'],(err)=>{
+
+      });
     });
    }else{
      alert("Please fill all Fields");

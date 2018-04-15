@@ -41,7 +41,9 @@ const routes: Routes = [
             {path: 'taskedit',loadChildren:
             './taskedit/taskedit.module#TaskEditModule'},
             {path: 'tasksrecord',loadChildren:
-            './tasksrecord/tasksrecord.module#TasksRecordModule'}
+            './tasksrecord/tasksrecord.module#TasksRecordModule'},
+            {path: 'pendingtasks',loadChildren:
+            './pendingtasks/pendingtasks.module#PendingTasksModule'}
 
         ]
     }
