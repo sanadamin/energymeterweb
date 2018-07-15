@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RecordComponent } from './record.component';
@@ -42,6 +43,7 @@ import {
   imports: [CommonModule, MatCommonModule,RecordRoutingModule, PageHeaderModule
   ,MatTableModule,MatPaginatorModule,MatFormFieldModule,MatInputModule,MatAutocompleteModule,MatButtonModule,MatSelectModule,MatAutocompleteModule,
   MatButtonModule,
+  FormsModule,
   CdkTableModule,
   MatButtonToggleModule,
   MatCardModule,

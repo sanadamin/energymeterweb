@@ -1,0 +1,143 @@
+<div [@routerTransition]>
+    <h2 class="text-muted">Umniah Dashboard <small>Engineering Task Tracker</small></h2>
+
+    <hr>
+    <div class="row">
+        <div class="col-xl-3 col-lg-6">
+            <a style="cursor: pointer" [routerLink]="['/record']">
+                <app-stat [bgClass]="'primary'" [icon]="'fa-tasks'" [count]="tasksInPipe" [label]="'Tasks In pipe'"></app-stat>
+            </a>
+        </div>
+        <div style="cursor: pointer" class="col-xl-3 col-lg-6">
+            <a style="cursor: pointer" [routerLink]="['/divisions']">
+                <app-stat [bgClass]="'warning'" [icon]="'fa-users'" [count]="employeeNumber" [label]="'Divisons Available'"></app-stat>
+            </a>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <a style="cursor: pointer" [routerLink]="['/tasksrecord']">
+                <app-stat [bgClass]="'success'" [icon]="'fa-clock-o'" [count]="taskApproval" [label]="'Tasks in Record'"></app-stat>
+            </a>
+        </div>
+        
+
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col col-sm-12">
+            <div class="card mb-1">
+                <div class="card-header">
+                    Task BreakDown
+                </div>
+                <div class="card-body">
+                    <canvas baseChart height="100px" [data]="doughnutChartData" [colors]="colorarray" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+        <!--<div class="col col-sm-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    Alarm Statistics
+                </div>
+                <div class="card-body">
+                    <canvas height="180px" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                    </canvas>
+
+                </div>
+            </div>
+        </div>-->
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col col-sm-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                Tasks Statistics
+            </div>
+            <div class="card-body">
+                <table class="table-responsive" cellpadding="10" style="margin: 0 auto;">
+                    <th>
+                        <div class="tableheader">
+                            Division
+                        </div>
+                    </th>
+                    <th>
+                        <div class="tableheader">
+                            Normal Tasks
+                        </div>
+                    </th>
+                    <th>
+                        <div class="tableheader">
+                            Tasks with Issues
+                        </div>
+                    </th>
+                    <th>
+                        <div class="tableheader">
+                            Completed Tasks
+                        </div>
+                    </th>
+                    <th>
+                        <div class="tableheader">
+                            Incidents
+                        </div>
+                    </th>
+                    <th>
+                        <div class="tableheader">
+
+                            Challanges
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="tableheader">
+                            Audit Risks
+                        </div>
+                    </th>
+                    <tr    *ngFor="let item of divs;let i=index" (click)=onclick(i)>
+                        <td>
+                            <div style="cursor:pointer"   class="tablerow"  (click)=columnindex(1)>
+                                {{item.data}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablecont" style="cursor:pointer"  (click)=columnindex(2)>
+                                {{item.count}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablecont"  style="cursor:pointer" (click)=columnindex(3)>
+                                {{item.countdel}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablecont"  style="cursor:pointer" (click)=columnindex(4)>
+                                {{item.countrecord}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablecont" style  (click)=columnindex(5)>
+                                {{item.countinc}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablecont" (click)=columnindex(6)>
+                                {{item.countchal}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablecont" (click)=columnindex(7)>
+                                {{item.countaudit}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

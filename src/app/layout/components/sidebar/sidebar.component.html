@@ -2,8 +2,12 @@
 
     <div class="list-group">
         <!--<a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Dashboard' | translate }}
+            <i class="fa fa-fw fa-desktop"></i>&nbsp;{{ 'Dashboard' | translate }}
         </a>-->
+	<a [routerLink]="['/dashboard']" [routerLinkActive]="['router-link-active']" class="list-group-item" >
+            <i class="fa fa-fw fa-desktop"></i>&nbsp;{{ 'Dashboard' | translate }}
+        </a>
+
         <a [routerLink]="['/taskconfig']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="isAdmin">
             <i class="fa fa-fw fa-tasks"></i>&nbsp;{{ 'New Tasks' | translate }}
         </a>
@@ -11,14 +15,20 @@
             <i class="fa fa-fw fa-pencil"></i>&nbsp;{{ 'Edit Tasks' | translate }}
         </a>
         <a [routerLink]="['/updatetask']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-edit"></i>&nbsp;{{ 'Update Tasks' | translate }}
+            <i class="fa fa-fw fa-edit"></i>&nbsp;{{ 'Update Tasks' | translate }} <span class="badge badge-success" style="float: right">{{updatetasks}}</span>
         </a>
         <a [routerLink]="['/record']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-book"></i>&nbsp;{{ 'Current Tasks' | translate }}
+            <i class="fa fa-fw fa-book"></i>&nbsp;{{ 'Current Tasks' | translate }} <span class="badge badge-success" style="float: right">{{currenttasks}}</span>
+
         </a>
         <a [routerLink]="['/pendingtasks']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-hourglass"></i>&nbsp;{{ 'Delegated Tasks' | translate }}
+            <i class="fa fa-fw fa-hourglass"></i>&nbsp;{{ 'Delegated Tasks' | translate }}  <span class="badge badge-success" style="float: right">{{pendingtasks}}</span>
+
         </a>
+ <a [routerLink]="['/delayed']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-clock-o"></i>&nbsp;{{ 'Delayed Tasks' | translate }}<span class="badge badge-success" style="float: right">{{delayedtasks}}</span>
+        </a>
+
         <a [routerLink]="['/tasksrecord']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="isAdmin">
             <i class="fa fa-fw fa-database"></i>&nbsp;{{ 'Record' | translate }}
         </a>

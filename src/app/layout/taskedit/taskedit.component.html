@@ -33,15 +33,11 @@
                                 <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
                             </ng-container>
 
-                            <!-- Progress Column -->
-                            <ng-container matColumnDef="progress">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header> Task Name </mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.progress}} </mat-cell>
-                            </ng-container>
+                          
 
                             <!-- Name Column -->
                             <ng-container matColumnDef="name">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header> Task Description </mat-header-cell>
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Task Name </mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
                             </ng-container>
 
@@ -66,7 +62,7 @@
                             </mat-row>
                         </mat-table>
 
-                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                        <mat-paginator [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
                     </div>
                 </div>
             </div>
@@ -90,6 +86,9 @@
                     </mat-form-field>
                 </div>
                 <div class="card-body ">
+
+
+<div class="table-responsive">
                     <table class="example-full-width " *ngIf="isClose" cellspacing="10 ">
                         <tr>
                             <mat-form-field>
@@ -179,6 +178,86 @@
 
                             </td>
                         </tr>
+			<tr><td colspan=100%><hr></td></tr>
+			<tr>
+				<td colspan=75%>
+				  <mat-form-field>
+                                    <input matInput placeholder="Task Decription" [(ngModel)]="taskdescription1">
+                                </mat-form-field>
+
+				</td>
+				<td colspan=25%>
+					<button class="btn btn-warning " style="width: 100% " (click)="UpdateDescription() "> Update Description</button>
+				</td>
+
+			</tr>
+				<tr><td colspan=100%><hr></td></tr>
+
+<tr>
+                            <td colspan=75%>
+
+                                <ng-select style="width:100%;padding: 10px" *ngIf="isloaded" [items]="emps1" bindLabel="name" bindValue="name" placeholder="Select Division" [(ngModel)]="newowner">
+                                    <ng-template ng-header-tmp>
+                                        Task Owner
+                                    </ng-template>
+                                </ng-select>
+
+                            </td>
+                            <td colspan=25%>
+                                <button mat-button-raised style="padding:10px; width:100%" class="btn btn-warning" (click)="UpdateOwner()">Update Owner</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan=100%>
+                                <hr>
+                            </td>
+                        </tr>
+   <tr>
+                            <td colspan=25%>
+
+
+                                <mat-form-field>
+                                    <textarea matInput placeholder="Justification" [(ngModel)]="justification"></textarea>
+                                </mat-form-field>
+
+
+                            </td>
+                            <td colspan=50%>
+
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="dp6" placeholder="New Due Date" disabled [(ngModel)]="newduedate">
+                                    <mat-datepicker-toggle matSuffix [for]="dp6"></mat-datepicker-toggle>
+                                    <mat-datepicker #dp6 disabled="false"></mat-datepicker>
+                                </mat-form-field>
+
+
+                            </td>
+                            <td colspan=25%>
+                                <button mat-button-raised style="padding:10px; width:100%" class="btn btn-warning" (click)="UpdateDueDate()">Update DueDate</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan=100%>
+                                <hr>
+                            </td>
+                        </tr>
+<tr>
+                            <td colspan=75%>
+                                <mat-form-field>
+                                    <mat-select placeholder="Please Select Status" [(value)]="selected1" (change)="onChange1($event)">
+                                        <mat-option value="Normal">Normal</mat-option>
+                                        <mat-option value="Potential Delay">Potential Delay</mat-option>
+                                        <mat-option value="Delayed">Delayed</mat-option>
+                                        <mat-option value="Major Delay">Major Delay</mat-option>
+                                        <mat-option value="Faliure">Faliure</mat-option>
+
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <hr>
+                        </tr>
                         <tr>
                             <td>
                                 <mat-form-field>
@@ -186,6 +265,7 @@
                                 </mat-form-field>
 
                             </td>
+
                             <td>
                                 <button style="padding:10px; width:100%" class="btn btn-info" (click)="AddEntity()">Add Entity</button>
 
@@ -213,13 +293,27 @@
                                     <input matInput placeholder="Entity Update " [(ngModel)]="enitiesmodel[in].entityupdate ">
                                 </mat-form-field>
                             </td>
+                            <td>
+                                <mat-form-field *ngFor="let item of myentitiesarray;let in=index" myentitiesarray class="example-full-width">
+                                    <input matInput [matDatepicker]="dp5" placeholder="Date of Update" disabled [(ngModel)]="enitiesmodel[in].dateofupdate">
+                                    <mat-datepicker-toggle matSuffix [for]="dp5"></mat-datepicker-toggle>
+                                    <mat-datepicker #dp5 disabled="false"></mat-datepicker>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field *ngFor="let item of myentitiesarray;let in=index" myentitiesarray class="example-full-width">
 
+                                    <input matInput [matDatepicker]="dp4" placeholder="Due Date" disabled [(ngModel)]="enitiesmodel[in].entityduedate">
+                                    <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+                                    <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+                                </mat-form-field>
+                            </td>
                         </tr>
                         <tr>
                             <td colspan=100%> <button class="btn btn-success " style="width: 100% " (click)="UpdateTask() ">{{selected}}</button></td>
                         </tr>
                     </table>
-
+</div>
 
 
 

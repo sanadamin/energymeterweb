@@ -1,0 +1,259 @@
+<div [@routerTransition]>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</div>
+
+<div class="example-header">
+
+<div class="table-responsive">
+	<table style="width:100%">  
+		<tr>
+			<td colspan="50%"> 
+ <mat-form-field>
+
+        <mat-select placeholder="Select Devision To Search" [(ngModel)]="Tasktype" (change)="eventie($event.value)">
+            <mat-option *ngFor="let item of devisionstosearch" value={{item.name}}>{{item.name}}</mat-option>
+	    <mat-option  value="Clear">Clear</mat-option>
+
+        </mat-select>
+
+    </mat-form-field>
+</td>
+
+<td colspan="50%">
+<mat-form-field>
+
+                                            <mat-select style="width: 100%" placeholder="Select Task To Filter" [(ngModel)]="TasktypetoFilter" (change)="eventie($event.value)">
+                                                <mat-option value="Task">Task</mat-option>
+                                                <mat-option value="Project">Project</mat-option>
+                                                <mat-option value="Optimization Action">Optimization Action</mat-option>
+                                                <mat-option value="Management Request">Management Request</mat-option>
+                                                <mat-option value="Incident">Incident</mat-option>
+                                                <mat-option value="Audit Risk">Audit Risk</mat-option>
+                                                <mat-option value="Challenge">Challenge</mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+
+</td>
+
+</tr>
+
+<tr>
+<td colspan="100%">
+<hr>
+</td>
+</tr>
+
+
+</table>
+</div>
+	<mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+</div>
+
+<div class="example-container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource" matSort>
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+        <!-- Status Column -->
+        <ng-container matColumnDef="statuscolor">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Due Status </mat-header-cell>
+            <mat-cell *matCellDef="let row"> <img src="{{row.statuscolor}}"> </mat-cell>
+        </ng-container>
+
+<ng-container matColumnDef="flagstatus">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.flag}}</mat-cell>
+        </ng-container>
+        <!-- Progress Column -->
+        <ng-container matColumnDef="progress">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Task Name </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.progress}} </mat-cell>
+        </ng-container>
+
+        <!-- Project Name Column -->
+        <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Task Type</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name }} </mat-cell>
+        </ng-container>
+
+<!-- Project Name Column -->
+        <ng-container matColumnDef="pending">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Pending On</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.pending }} </mat-cell>
+        </ng-container>
+
+
+               <!-- Color Column -->
+
+        <ng-container matColumnDef="color">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.color | date: 'dd/MM/yyyy'}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="test">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Project Owner </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.date}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="myprogress">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow='90' aria-valuemin="0" aria-valuemax="100" [style.width.%]="row.myprogress">
+                        {{row.myprogress}}%
+                    </div>
+                </div>
+            </mat-cell>
+        </ng-container>
+        <!--<ng-container matColumnDef="actiontaken">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Action Taken </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.actiontaken}} </mat-cell>
+        </ng-container>-->
+
+        <!--<ng-container matColumnDef="acktime">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> AcK Time </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.acktime}} </mat-cell>
+
+        </ng-container>
+        <ng-container matColumnDef="taskenteredtime">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Enter Time </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.taskenteredtime}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="closetime">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Close Time </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.closetime}} </mat-cell>
+        </ng-container>-->
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="LoadTask(row)" style="cursor: pointer">
+        </mat-row>
+
+    </mat-table>
+    <mat-paginator [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+<hr>
+    <mat-progress-bar *ngIf="ispending" class="example-margin" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue">
+    </mat-progress-bar>
+
+<hr>
+<div class="row">
+    <div class="col-xs-12">
+        <button class="btn btn-success" (click)="eventClicked()">Export To CSV</button>
+    </div>
+</div>
+<div class="row" *ngIf="isClicked">
+    <div class="col col-xs-12">
+        <div class="card mb-12">
+            <div class="card-header">
+                Selected Task Details
+            </div>
+            <div class="card-body">
+                <div [@routerTransition]>
+                    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+                </div>
+                <div>
+                    <table style="width:100%" border="1">
+                        <tr style="background: yellow">
+                            <th style="padding: 20px">
+                                Entity
+                            </th>
+                            <th style="padding: 20px">
+                                Update Description
+                            </th>
+                            <th style="padding: 20px">
+                                Entity Due Date
+                            </th>
+                            <th style="padding: 20px">
+                                Date of Update
+                            </th>
+                            <th style="padding: 20px">
+                                Updater
+                            </th>
+                        </tr>
+                        <tr *ngFor="let item of columns1">
+                            <td style="padding: 20px">
+                                {{item.name}}
+                            </td>
+                            <td style="padding: 20px">
+                                {{item.update}}
+                            </td>
+                            <td style="padding: 20px">
+                                {{item.entityduedate | date}}
+                            </td>
+                            <td style="padding: 20px">
+                                {{item.dateofupdate | date}}
+                            </td>
+                            <td style="padding: 20px">
+                                {{item.updater}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+
+<div class="row" *ngIf="isClicked">
+    <div class="col col-xs-12">
+        <div class="card mb-12">
+            <div class="card-header">
+                Selected Task History Details
+            </div>
+            <div class="card-body">
+                <div [@routerTransition]>
+                    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+                </div>
+                <div>
+                    <table style="width:100%" border="1">
+                        <tr style="background: yellow">
+                            <th style="padding: 20px">
+                                Entity
+                            </th>
+                            <th style="padding: 20px">
+                                Update Description
+                            </th>
+                            <th style="padding: 20px">
+                                Entity Due Date
+                            </th>
+                            <th style="padding: 20px">
+                                Date of Update
+                            </th>
+                            <th style="padding: 20px">
+                                Updater
+                            </th>
+
+                        </tr>
+                        <tr *ngFor="let item of columns">
+                            <td style="padding: 20px">
+                                {{item.name}}
+                            </td>
+                            <td style="padding: 20px">
+                                {{item.update}}
+                            </td>
+                            <td style="padding: 20px">
+                                {{item.entityduedate | date}}
+                            </td>
+                            <td style="padding: 20px">
+                                {{item.dateofupdate | date}}
+                            </td>
+                            <td style="padding: 20px">
+                                {{item.updater}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

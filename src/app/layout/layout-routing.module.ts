@@ -10,6 +10,7 @@ const routes: Routes = [
         path: '',
         component: LayoutComponent,canActivate: [AuthGuard],
         children: [
+	    { path: 'tasktracker', redirectTo: 'dashboard' },
             { path: '', redirectTo: 'dashboard' },
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
             { path: 'charts', loadChildren: './charts/charts.module#ChartsModule' },
@@ -43,7 +44,11 @@ const routes: Routes = [
             {path: 'tasksrecord',loadChildren:
             './tasksrecord/tasksrecord.module#TasksRecordModule'},
             {path: 'pendingtasks',loadChildren:
-            './pendingtasks/pendingtasks.module#PendingTasksModule'}
+            './pendingtasks/pendingtasks.module#PendingTasksModule'},
+	    {path: 'detail',loadChildren:
+            './detail/detail.module#DetailModule'},
+{path: 'delayed',loadChildren:
+            './delayed/delayed.module#DelayedModule'}
 
         ]
     }

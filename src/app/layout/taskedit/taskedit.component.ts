@@ -11,12 +11,17 @@ import { routerTransition } from '../../router.animations';
 export class TaskeditComponent implements OnInit{
  isClicked = false;
   Taskid='';
+  newowner = '';
   enitiesmodel:entity[] = [];
   entitieshistory:entity1[] = [];
   selected = 'Update';
-  isUpdate = false;
+  selected1 = ''; 
+justification = '';
+newduedate = '';
+ isUpdate = false;
   isClose = false;
   TaskName = '';
+  dateofupdate = '';
   progress = '';
   RelatedPR = '';
   PRnumber = '';
@@ -30,6 +35,8 @@ export class TaskeditComponent implements OnInit{
   duedate = '';
   prstatus = '';
   entityname = ''
+  taskdescription = '';
+  taskdescription1 = '';
   project = '';
   myentitiesarray=[];
   mystringarray = [];
@@ -41,7 +48,7 @@ export class TaskeditComponent implements OnInit{
   lastupdate = '';
   isloaded = false;
   closingStatus = '';
-  displayedColumns = ['id', 'name', 'progress', 'color'];
+  displayedColumns = ['id', 'name', 'color'];
   dataSource: MatTableDataSource<UserData>;
 
 
@@ -79,7 +86,7 @@ export class TaskeditComponent implements OnInit{
         });
         
     
-this.serverService.getEmps().subscribe((res)=>{
+this.serverService.getDivs().subscribe((res)=>{
       console.log(res.json());
         let empJson = res.json();
         let ind = 0;
@@ -112,23 +119,40 @@ onClose(){
     alert("Error" + onerror);
   })
 }
+
+
+UpdateDueDate(){
+this.serverService.UpdateDueDate(this.Taskid,this.newduedate,this.justification).subscribe((res)=>{
+alert('Due Date Updated');
+this.justification = '';
+this.newduedate = '';
+});
+}
+
+
+
 LoadTask(row){
   console.log(row.id);
  
   this.serverService.GetTaskByID(this.myres[row.id]['taskid']).subscribe((res)=>{
     let thisres = res.json();
     this.Taskid= thisres['_id'];
+    this.taskdescription1 = thisres['description'];
     this.TaskName = thisres['taskname'];
     this.progress = thisres['progress'];
     this.duedate = thisres['duedate'];
     this.PRnumber = thisres['relatedpr']['prnumber'];
     this.PRStatus = thisres['relatedpr']['prstatus'];
+    this.selected1 = thisres['flag'];
     this.PONumber = thisres['relatedpo']['ponumber'];
     this.POStatus = thisres['relatedpo']['postatus'];
     this.budgetline = thisres['budgetline'];
     this.actualbudget = thisres['actualbudget'];
     this.budgetreserved = thisres['budgetamount'];
-    for(let s of thisres['updates']){
+    this.taskdescription = thisres['taskdescription'];
+    this.newowner = thisres['taskownmer']; 
+
+   for(let s of thisres['updates']){
       this.lastupdate = s['value'];
      
     }
@@ -136,9 +160,8 @@ LoadTask(row){
     this.enitiesmodel = [];
     this.entitieshistory = [];
     for(let i of thisres['effectedentities']){
-      this.myentitiesarray.push({entityname:i['entityname'],entityupdate:i['entityupdate']});
-      this.enitiesmodel.push({entityname:i['entityname'],entityupdate:i['entityupdate'],updater:localStorage.getItem('userName')});
-      console.log("123123123"+this.enitiesmodel[0]['updater']);
+      this.myentitiesarray.push({entityname:i['entityname'],entityupdate:i['entityupdate'],entitydueduate:i['entityduedate'],dateofupdate:i['dateofupdate']});
+      this.enitiesmodel.push({entityname:i['entityname'],entityupdate:i['entityupdate'], entityduedate:i['entityduedate'],updater:localStorage.getItem('userName'),dateofupdate:i['dateofupdate']});
       this.entitieshistory.push({entityname:i['entityname'],entityupdate:i['entityupdate']});
     //  alert(this.enitiesmodel[0].entityname);
     }
@@ -149,18 +172,31 @@ LoadTask(row){
   ngOnInit() {
   }
 
+UpdateOwner(){
+  this.serverService.UpdateOwner(this.Taskid,this.newowner).subscribe((res)=>{
+    alert('Owner Updated');
+  })
+}
+
 AddEntity(){
  alert(this.Taskid);
  this.serverService.AddEntity(this.Taskid,this.entityname,localStorage.getItem('userName')).subscribe((res)=>{
    alert(res);
  });
 }
+
+
+UpdateDescription(){
+  this.serverService.UpdateDescription(this.Taskid,this.taskdescription1).subscribe((res)=>{
+    alert('Task Description Updated');
+  })
+}
   UpdateTask(){
   
     let username = localStorage.getItem('userName');
      this.serverService.UpdateTaskHistory(this.Taskid,this.entitieshistory).subscribe((res)=>{
        alert(this.PONumber);
-      this.serverService.UpdateTaskTracker(this.Taskid,this.progress,this.duedate,this.PRnumber,this.RelatedPO,this.Updatedescription,username,this.enitiesmodel,this.PRStatus,this.PONumber,this.POStatus,this.actualbudget,this.budgetreserved,this.budgetline).subscribe((res)=>{
+      this.serverService.UpdateTaskTracker(this.Taskid,this.progress,this.duedate,this.PRnumber,this.RelatedPO,this.Updatedescription,username,this.enitiesmodel,this.PRStatus,this.PONumber,this.POStatus,this.actualbudget,this.budgetreserved,this.budgetline,this.dateofupdate,this.selected1).subscribe((res)=>{
 alert('Task Updated');
 this.isClicked = false;
 this.entitieshistory = [];
@@ -220,7 +256,9 @@ interface employee {
  interface entity{
    entityname:string,
    entityupdate:string,
-   updater:string
+   updater:string,
+   dateofupdate:string,
+   entityduedate:string
  }
  interface entity1{
    entityname:string,
@@ -228,5 +266,6 @@ interface employee {
 
  
  }
+
 
 

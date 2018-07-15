@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { element } from 'protractor';
+import { Component, OnInit,Inject, ViewChild } from '@angular/core';
 import { routerTransition } from '../../router.animations';
-import {ServerService} from './Server.Service'
+import {ServerService} from './Server.Service';
+import {BaseChartDirective} from 'ng4-charts';
 import { AgmCoreModule ,MarkerManager,GoogleMapsAPIWrapper} from '@agm/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
+
 
 @Component({
     selector: 'app-dashboard',
@@ -10,8 +16,29 @@ import { AgmCoreModule ,MarkerManager,GoogleMapsAPIWrapper} from '@agm/core';
     animations: [routerTransition()]
 })
 export class DashboardComponent implements OnInit {
+
+@ViewChild(BaseChartDirective)
+public chart: BaseChartDirective;
+
+
+isDataLoaded=false;
     public alerts: Array<any> = [];
+    isLoaded = false;
     public sliders: Array<any> = [];
+    public doughnutChartLabels: any[] = [];
+    divs:mydata[] = [];
+    
+    public doughnutChartData: any[] = [];
+    public doughnutChartType: string = 'doughnut';
+   
+    public tempdata: any[] = [];
+    public templabel: any[] = [];
+     rowind = 0;
+    colind = 0;
+    
+    
+    public colorarray: any[] = [{backgroundColor:["#f2c539","#CD6155","#61676c","#D2B4DE","#c5d8b2","#52BE80","#CD6155","#FAD7A0","#D2B4DE","#B7950B","#B2BABB"]}]
+
     numbers: numbers = {
         powernumber: 0,
         twonumber: 0,
@@ -38,148 +65,104 @@ export class DashboardComponent implements OnInit {
         today6:0
 
     }
-    constructor(private serverService:ServerService,private manager:MarkerManager,private api:GoogleMapsAPIWrapper) {
-    this.serverService.GetRecord().subscribe((res)=>{
-            let resJSon = res.json();
-            for(let cat of resJSon){
-                if(cat['taskcat']=== 'Power'){
-                    // console.log('power');
-                     this.numbers.powernumber++;
-                }else if(cat['taskcat']=== '2G'){
-                    // console.log('2g');
-                    this.numbers.twonumber++;
-                }else if(cat['taskcat']=== '3G'){
-                    // console.log('3g');
-                    this.numbers.threenumber++;
-                }else if(cat['taskcat']=== '4G'){
-                    // console.log('4g');
-                    this.numbers.fournumber++;
-                }else if(cat['taskcat']=== 'MicroWave'){
-                    // console.log('MW');
-                    this.numbers.microwavenumber++;
-                }
-                let mydate = new Date(cat['taskdate']);
-                let myDay = mydate.getDate();
-                let mymonth = mydate.getMonth();
-                let myyear = mydate.getFullYear();
-                // console.log(mymonth+'/'+myDay+'/'+myyear);
-                let today = new Date();
-                
-              
-                
-            //    console.log('123123'+this.alarmstat.today1);
-              
-                today.setDate(today.getDate() - 0).toString();
-                this.days.today =  today.getDate().toString();
-                today.setDate(today.getDate() - 1).toString();
-                this.days.today1 = today.getDate().toString();
-                 today.setDate(today.getDate() - 1).toString();
-                this.days.today2 = today.getDate().toString();
-                 today.setDate(today.getDate() - 1).toString();
-                this.days.today3 = today.getDate().toString();
-                 today.setDate(today.getDate() - 1).toString();
-                this.days.today4 = today.getDate().toString();
-                 today.setDate(today.getDate() - 1).toString();
-                this.days.today5 = today.getDate().toString();
-                 today.setDate(today.getDate() - 1).toString();
-                this.days.today6 = today.getDate().toString();
-                
-                    console.log(this.days.today+
-                    this.days.today1+
-                    this.days.today2+
-                    this.days.today3+
-                    this.days.today4+
-                    this.days.today5+
-                    this.days.today6)
-                    this.barChartLabels = [
-                    this.days.today,
-                    this.days.today1,
-                    this.days.today2,
-                    this.days.today3,
-                    this.days.today4,
-                    this.days.today5,
-                    this.days.today6];
-                today = new Date();
-                let todayDay = today.getDate();
-                let todaymonth = today.getMonth();
-                let todayyear = today.getFullYear();
-                // console.log('today'+today);
-                //  console.log('myday'+mydate);
-                if((todayDay === myDay)&&(mymonth === todaymonth)&&(todayyear ===myyear)){
-                    this.alarmstat.today ++;
-                } 
-                today.setDate(today.getDate()-1);
-                todayDay = today.getDate();
-                todaymonth = today.getMonth();
-                todayyear = today.getFullYear();
-                if((todayDay === myDay)&&(mymonth  === todaymonth)&&(todayyear  ===myyear)){
-                    this.alarmstat.today1 ++;
-                }
-                today.setDate(today.getDate()-1);
-                todayDay = today.getDate();
-                todaymonth = today.getMonth();
-                todayyear = today.getFullYear();
-                if((todayDay === myDay)&&(mymonth  === todaymonth)&&(todayyear  ===myyear)){
-                    this.alarmstat.today2 ++;
-                }
-                today.setDate(today.getDate()-1);
-                todayDay = today.getDate();
-                todaymonth = today.getMonth();
-                todayyear = today.getFullYear();
-                if((todayDay === myDay)&&(mymonth  === todaymonth)&&(todayyear  ===myyear)){
-                    this.alarmstat.today3 ++;
-                }
-                today.setDate(today.getDate()-1);
-                todayDay = today.getDate();
-                todaymonth = today.getMonth();
-                todayyear = today.getFullYear();
-                if((todayDay === myDay)&&(mymonth  === todaymonth)&&(todayyear  ===myyear)){
-                    this.alarmstat.today4 ++;
-                }
-                today.setDate(today.getDate()-1);
-                todayDay = today.getDate();
-                todaymonth = today.getMonth();
-                todayyear = today.getFullYear();
-                if((todayDay === myDay)&&(mymonth  === todaymonth)&&(todayyear  ===myyear)){
-                    this.alarmstat.today5 ++;
-                }
-                today.setDate(today.getDate()-1);
-                todayDay = today.getDate();
-                todaymonth = today.getMonth();
-                todayyear = today.getFullYear();
-                if((todayDay === myDay)&&(mymonth  === todaymonth)&&(todayyear  ===myyear)){
-                    this.alarmstat.today6 ++;
-                }
-                
-                // console.log(this.alarmstat.today1);
-            }
+ openDialog(): void {
+    let dialogRef = this.dialog.open(DialogOverviewExampleDialog1, {
+      width: '500px',
+      data: { name: 'sanad' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      
+    });
+  }
+    constructor(private serverService:ServerService,public dialog: MatDialog,private manager:MarkerManager,private api:GoogleMapsAPIWrapper, private router:Router) {
+             this.openDialog();
+         this.serverService.getDivs().subscribe((res)=>{
+            let s = res.json();
+            this.employees = s;
+            this.employeeNumber = s.length;
             
-        this.barChartLabels = [
-                    this.days.today,
-                    this.days.today1,
-                    this.days.today2,
-                    this.days.today3,
-                    this.days.today4,
-                    this.days.today5,
-                    this.days.today6];
-        this.barChartData = [
-        { data: [
-            this.alarmstat.today, 
-            this.alarmstat.today1,
-            this.alarmstat.today2,
-            this.alarmstat.today3,
-            this.alarmstat.today4, 
-            this.alarmstat.today5, 
-            this.alarmstat.today6], label: 'Alarms Number' }
-    ];
-            this.doughnutChartData = [
-                  this.numbers.powernumber,
-                  this.numbers.twonumber,
-                  this.numbers.threenumber,
-                  this.numbers.fournumber,
-                  this.numbers.microwavenumber]
-        });
+            this.doughnutChartType = 'doughnut';
+            this.isLoaded = true;   
+            // console.log(s);
+            for(let i of s){
+               
+              if(i.name){
+                 
+                 this.serverService.GetTaskNumByDiv(i.name).subscribe((res)=>{
+                 
+                
+                     let x = res.json();
+                     
+               //     this.doughnutChartLabels.push(i.name);
+                 //    this.doughnutChartData.push(x.length);
+			 this.templabel.push(i.name);
+                     this.tempdata.push(x.length);
+                     if(s.length === this.tempdata.length){
+	this.doughnutChartLabels = this.templabel;
+          this.doughnutChartData = this.tempdata;
         
+         this.isDataLoaded = true; 
+          this.chart.chart.update(); 
+                 }
+                     this.serverService.GetTaskNumByType("Task",i.name).subscribe((res)=>{
+                         let typetask = res.json();
+                         this.serverService.GetTaskDelayByDiv(i.name).subscribe((res)=>{
+                            let delres = res.json();
+                            
+                            this.serverService.GetTaskRecordByDiv(i.name).subscribe((res)=>{
+                                let recordres = res.json();
+                                this.serverService.GetTaskNumByType("Incident",i.name).subscribe((res)=>{
+                                    let incres = res.json();
+                                    this.serverService.GetTaskNumByType("Challenge",i.name).subscribe((res)=>{
+                                        let chares = res.json();
+                                        this.serverService.GetTaskNumByType("Audit Risk",i.name).subscribe((res)=>{
+                                            let auditres = res.json();
+this.divs.push({    
+                                        data:i.name,
+                                        count:typetask.length,
+                                        countdel:delres.length,countrecord:recordres.length,countinc:incres.length,countchal:chares.length,
+                                    countaudit:auditres.length});
+                                        })
+                                    })
+                                    
+
+                                })
+                                
+                            })
+                            
+                         })
+                         ;
+                     })
+                      
+                       
+                 })
+              }
+             
+              // this.doughnutChartData = [...this.doughnutChartData];
+              // this.doughnutChartLabels = [...this.doughnutChartLabels];
+             
+            // console.log(i['emplat']);
+             this.markers.push({latt:+(i.emplat),longg:+i.emplong,empname:i.empname});
+        }
+
+//this.doughnutChartLabels = this.templabel;
+        //  this.doughnutChartData = this.tempdata;
+
+//	this.chart.chart.update();
+// this.doughnutChartData = [...this.doughnutChartData];
+// this.doughnutChartLabels = [...this.doughnutChartLabels];
+
+
+
+        },(err)=>{
+            // console.log(err);
+        });
+ 			this.dialog.closeAll();
+
+
+                     
         // 
         this.sliders.push(
             {
@@ -225,30 +208,93 @@ tasksInPipe : number;
 employeeNumber : number;
 employees = '';
 taskApproval : number;
+onclick(event){
+   
+    this.rowind = event;
+    let variab = '';
+     
+     switch(this.colind){
+         case 1:{
+         variab = 'data';
+         
+         break;}
+         case 2:{
+             variab = 'count';
+             this.serverService.GetTaskNumByType("Task",this.divs[this.rowind]['data']).subscribe((res)=>{
+             
+             let tasknum = res.json();
+             
+             this.serverService.teststring(tasknum);
+             this.router.navigate(['/detail']);
+          
+         });
+             break;
+         }
+         case 3:{
+         variab = 'countdel';
+          this.serverService.GetTaskDelayByDiv(this.divs[this.rowind]['data']).subscribe((res)=>{
+             let tasknum = res.json();
+             
+             this.serverService.teststring(tasknum);
+             this.router.navigate(['/detail']);
 
+          });
+         break;}
+         case 4:{
+             variab = 'countrecord';
+             this.serverService.GetTaskRecordByDiv(this.divs[this.rowind]['data']).subscribe((res)=>{
+                                let tasknum = res.json();
+                                this.serverService.teststring(tasknum);
+             this.router.navigate(['/detail']);
+             });
+             break;
+         }
+        case 5:{
+             variab = 'countinc';
+              this.serverService.GetTaskNumByType("Incident",this.divs[this.rowind]['data']).subscribe((res)=>{
+                 let tasknum = res.json();
+                                this.serverService.teststring(tasknum);
+             this.router.navigate(['/detail']);
+              });
+             break;
+         }
+         case 6:{
+         variab = 'countchal';
+         this.serverService.GetTaskNumByType("Challenge",this.divs[this.rowind]['data']).subscribe((res)=>{
+                let tasknum = res.json();
+                                this.serverService.teststring(tasknum);
+             this.router.navigate(['/detail']);
+         });
+         break;}
+         case 7:{
+             variab = 'countaudit';
+              this.serverService.GetTaskNumByType("Audit Risk",this.divs[this.rowind]['data']).subscribe((res)=>{
+                let tasknum = res.json();
+                                this.serverService.teststring(tasknum);
+             this.router.navigate(['/detail']);
+              });
+             break;
+         }
+
+     }
+      
+}
+columnindex(ind){
+    
+    this.colind = ind;
+   
+}
     ngOnInit() {
-            this.serverService.readTasks().subscribe((res)=>{
-            
+        
+            this.serverService.GetAlltasks().subscribe((res)=>{
             let s = res.json();
-            s
             // console.log(s);
             this.tasksInPipe = s.length;
             // console.log(s.length);
         },
         (error)=>{console.log(error)});
-        this.serverService.readEmployee().subscribe((res)=>{
-            let s = res.json();
-            this.employees = s;
-            this.employeeNumber = s.length;
-            // console.log(s);
-            for(let i of s){
-            // console.log(i['emplat']);
-             this.markers.push({latt:+(i.emplat),longg:+i.emplong,empname:i.empname});
-        }
-        },(err)=>{
-            // console.log(err);
-        });
-        this.serverService.readTaskApproval().subscribe((res)=>{
+       
+        this.serverService.GetAlltasksRecord().subscribe((res)=>{
             let s = res.json();
             this.taskApproval = s.length;
 
@@ -285,15 +331,7 @@ taskApproval : number;
     public barChartData: any[] = [
         { data: [15, 10, 0,0, 0, 0, 0], label: 'Alarms Number' }
     ];
-    public doughnutChartLabels: string[] = [
-        'Power',
-        '2G',
-        '3G',
-        '4G',
-        'Microwave'
-    ];
-    public doughnutChartData: number[] = [400,500,300,100,500];
-    public doughnutChartType: string = 'doughnut';
+    
     public closeAlert(alert: any) {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);
@@ -347,3 +385,36 @@ interface alarmsbydays{
     today5:number,
     today6:number,
 }
+
+interface mydata{
+    data: string,
+    count: string,
+    countdel: string,
+    countrecord: string,
+    countinc: string,
+    countchal: string,
+    countaudit: string
+}
+@Component({
+    selector: 'dialog-overview-example-dialog',
+    templateUrl: 'dialog-overview-example-dialog.html',
+  })
+  export class DialogOverviewExampleDialog1 {
+  
+    constructor(
+      public dialogRef: MatDialogRef<DialogOverviewExampleDialog1>,
+      @Inject(MAT_DIALOG_DATA) public data: userdate) { 
+        
+  
+      }
+  
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
+  closeDialog(){
+      this.dialogRef.close();
+    }
+  }
+  export interface userdate{
+    name: string
+  }

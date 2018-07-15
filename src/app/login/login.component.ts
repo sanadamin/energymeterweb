@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
             if(newres['auth']==='Approved'){
                 localStorage.setItem('isLoggedin', 'true');
                 localStorage.setItem('userName',this.userName);localStorage.setItem('level',newres['level']);
-                this.router.navigate(['/owner']);
+                this.router.navigate(['/dashboard']);
             }else{
                 alert("Please Check Username and Password");
             }

@@ -7,6 +7,8 @@ import {UpdateTaskRoutingModule} from './updatetask-routing.module'
 import { PageHeaderModule } from './../../shared';
 import {CdkTableModule} from '@angular/cdk/table'
 import { NgSelectModule } from '@ng-select/ng-select';
+import { DialogOverviewExampleDialog1 } from './updatetask.component';
+
 
 import {
   MatAutocompleteModule,
@@ -80,6 +82,7 @@ import {
   MatStepperModule,
   MatFormFieldModule],
 
-  declarations: [UpdatetaskComponent]
+ entryComponents: [ DialogOverviewExampleDialog1],
+  declarations: [UpdatetaskComponent,DialogOverviewExampleDialog1]
 })
 export class UpdateTaskModule {}

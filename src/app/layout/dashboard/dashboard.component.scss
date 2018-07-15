@@ -1,3 +1,49 @@
 agm-map {
     height: 300px;
 }
+
+.tableheader {
+    border-style: solid;
+    padding: 5px;
+    width: 125px;
+    height: 75px;
+    border-radius: 10px;
+    background-color: #D9E838;
+    border-color: #2D3437;
+    /* Opera 7 */
+    word-wrap: normal;
+    text-align: center;
+    align-content: center;
+}
+
+.tablerow {
+    border-style: solid;
+    text-justify: center;
+    padding: 5px;
+    vertical-align: middle;
+    text-align: center;
+    width: 125px;
+    height: 55px;
+    border-radius: 10px;
+    background-color: #2D3437;
+    border-color: #D9E838;
+    color: #ffffee;
+    /* Opera 7 */
+    word-wrap: normal;
+}
+
+.tablecont {
+    border-style: solid;
+    text-justify: center;
+    padding: 5px;
+    vertical-align: middle;
+    text-align: center;
+    width: 125px;
+    height: 55px;
+    border-radius: 10px;
+    background-color: #C2C2C2;
+    border-color: #D9E838;
+    color: #000000;
+    /* Opera 7 */
+    word-wrap: normal;
+}

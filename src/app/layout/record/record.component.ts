@@ -14,14 +14,25 @@ import { ServerService } from './../dashboard/Server.Service';
 export class RecordComponent implements OnInit {
  
  isClicked =false;
- displayedColumns = ['id','statuscolor',  'progress','date','name','test', 'color','myprogress'];
+ ispendingloaded = false;
+
+devisionstosearch:any = [];
+  Tasktype = '';
+  Tasktype12 ='';
+ displayedColumns = ['id','statuscolor','flagstatus',  'progress','date','pending','test', 'color','myprogress'];
  dataSource: MatTableDataSource<UserData>;
  tasks: task[] = [];
+ispending = true;
+   color = 'primary';
+  mode = 'indeterminate';
+  value = 50;
+  bufferValue = 75;
  ss = [];
  rows= [];
  status_Color = "assets/images/green.png";
  columns:any = [];
  columns1:any = [];
+ columns2:any = [];
  updatesarray:updates[] = [];
  recordTemplate: recordTemp[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -29,11 +40,26 @@ export class RecordComponent implements OnInit {
 
   constructor(private serverService:ServerService) {
     // Create 100 users
+
+this.serverService.getDivs().subscribe((res)=>{
+        
+        let empJson = res.json();
+        let ind = 0;
+        for (let emp of empJson){
+          this.devisionstosearch.push({id: ind,name: emp['name']});
+          ind++;
+        }
+         console.log('111');
+         console.log(this.devisionstosearch);
+         this.devisionstosearch = [...this.devisionstosearch];
+         this.ispendingloaded = true;
+    })
     this.serverService.GetAlltasks().subscribe((res)=>{
             
             let s = res.json();
             this.ss = s;
             console.log(s);
+            let length = [];
             for (let i of s){
               // let sj = i['associatedprs'];
               // let prs = '';
@@ -46,7 +72,7 @@ export class RecordComponent implements OnInit {
               let days = 0;
               let date = new Date();
               let ddate =new Date(i['duedate']);
-              alert();
+             
               
               
               days = Math.ceil((date.getTime() - ddate.getTime()) / (1000 * 3600 * 24))
@@ -77,34 +103,41 @@ for(let eent of i['effectedentities']){
   effectedentitiesstring = effectedentitiesstring + eent['entityname'] +'%$#' + eent['entityupdate'] +'%$#' + eent['dateofupdate'] +'%$#'+eent['updater'] +'%$#'+eent['entityduedate'] +'%$#' + '\n'; 
 }
               
-              this.recordTemplate.push({
-duedate: i['duedate'],
+             this.recordTemplate.push({
+  taskname:i['taskname'],
+  duedate: i['duedate'],
   taskdate: i['taskdate'],
   project: i['project'],
   tasktype: i['tasktype'],
-  taskowner: i['taskowner'],
+  taskowner: i['taskownmer'],
   description:i['description'],
-  taskname:i['taskname'],
-  closer: i['closer'],
-  closestatus: i['closestatus'],
-  closedate:i['closedate'],
   relatedpr:prstring,
   relatedpo:postring,
   entitieshistory:entitystring,
   effectedentities:effectedentitiesstring
               });
             
+
+ let penstring = '';
+            for(let pen of i['pending']){
+             
+              if(!pen['feedback']){
+                penstring = penstring + pen['pendingon'] + ' , ';
+              }
+            }
      
             this.tasks.push({
               taskName: i['taskname'],
               taskStaff:i['description'],
-              taskSite:i['project'],
+              taskSite:i['tasktype'],
               taskStartTime:i['duedate'],
               actiontaken: i['taskownmer'],
               progress:i['progress'],
               taskid:i['_id'],
-              statuscolor:this.status_Color
-             })
+              statuscolor:this.status_Color,
+              flag:i['flag'],
+	      pending:penstring             
+})
             }
             
            
@@ -120,7 +153,9 @@ duedate: i['duedate'],
       this.tasks[j].taskStartTime,
       this.tasks[j].actiontaken,
       this.tasks[j].progress,
-      this.tasks[j].statuscolor
+      this.tasks[j].statuscolor,
+      this.tasks[j].flag,
+      this.tasks[j].pending
       )); 
      j++;}
      
@@ -131,17 +166,36 @@ duedate: i['duedate'],
         },
         (error)=>{console.log(error)});
     
-    
+    this.ispending = false;
+  }
+
+eventie(filterValue){
+    if(filterValue != 'Clear'){
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+    this.dataSource.paginator = this.paginator;}else{
+	filterValue='';
+filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+    this.dataSource.paginator = this.paginator;
+}
   }
 LoadTask(row)
 {
   this.columns = [];
   this.columns1 = [];
-  
+  this.columns2 = [];
   this.serverService.GetTaskByID(this.tasks[row['id']]['taskid']).subscribe((res)=>{
     let  myupdates = res.json();
+    console.log(myupdates);
     let updatesarray1 = myupdates['entitieshistory'];
     let entitiesupdates = myupdates['effectedentities'];
+    let duedatehis = myupdates['duedatehis'];
+    for (let iii of duedatehis){
+      this.columns2.push({duedate:iii['oldduedate'],justification:['justification']})
+    }
     for(let ii of entitiesupdates){
      
       this.updatesarray.push({update:ii['entityname'],date:ii['dateofupdate'],updater:ii['entityupdate']});
@@ -219,7 +273,7 @@ OnAddTask(){
   }
 eventClicked(){
   this
-new Angular2Csv(this.recordTemplate, 'My Report',{headers: ['Date','Employee Name','Site Name','Task Category','Task Name','Consumed Time','Charging Time','Action Taken','Approved By','Start Time','Acknowledge Time','Site Entered Time','Closing Time']});
+new Angular2Csv(this.recordTemplate, 'My Report',{headers: ['Task Name','Assigned Due Date','Assigned Task Date','Project','Task Type','Owner','Description','Related Pr','Related PO','Update History','Last Update']});
   }
   
 }
@@ -233,7 +287,9 @@ function createNewUser(
   startTime:string,
   action:string,
   myprogress:string,
-  statuscolor:string
+  statuscolor:string,
+  flag: string,
+  pending:string
   ): UserData {
   
   return {
@@ -244,7 +300,9 @@ function createNewUser(
     test: employee,
     date:action,
     myprogress:myprogress,
-    statuscolor:statuscolor
+    statuscolor:statuscolor,
+    flag:flag,
+    pending: pending
    
 
   };
@@ -265,7 +323,9 @@ export interface UserData {
   test: string;
   date:string,
   myprogress:string,
-  statuscolor:string
+  statuscolor:string,
+  flag: string,
+  pending:string
   
 }
 
@@ -277,9 +337,13 @@ interface task{
     actiontaken:string,
     progress:string,
     taskid:string,
-    statuscolor: string
+    statuscolor: string,
+    flag: string,
+    pending: string
     
 }
+
+
 
 interface recordTemp{
   duedate: String,
@@ -289,9 +353,6 @@ interface recordTemp{
   taskowner: String,
   description:String,
   taskname:String,
-  closer: String,
-  closestatus: String,
-  closedate:String,
   relatedpr:String,
   relatedpo:String,
   entitieshistory:String,
@@ -299,6 +360,7 @@ interface recordTemp{
 
  
 }
+
 interface updates{
   update:string,
   date:string,

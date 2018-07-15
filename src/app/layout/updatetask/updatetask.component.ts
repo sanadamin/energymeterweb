@@ -1,8 +1,8 @@
 import { ServerService } from './../dashboard/Server.Service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import { routerTransition } from '../../router.animations';
-
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 @Component({
   selector: 'app-updatetask',
   templateUrl: './updatetask.component.html',
@@ -24,13 +24,16 @@ export class UpdatetaskComponent implements OnInit {
   actualbudget = '';
   TaskName = '';
   progress = '';
+  selected1 = '';
   RelatedPR = '';
   PRnumber = '';
   PRStatus = '';
   RelatedPO = '';
   PONumber = '';
   POStatus = '';
+  alertstring = '';
   duedate = '';
+  dateofupdate = '';
   taskdelegate = '';
   prstatus = '';
   project = '';
@@ -44,14 +47,26 @@ export class UpdatetaskComponent implements OnInit {
   myres: tasks[] = [];
   lastupdate = '';
   isloaded = false;
-  displayedColumns = ['id', 'name', 'progress', 'color'];
+  displayedColumns = ['id',  'progress','weekly' ,'color'];
   dataSource: MatTableDataSource<UserData>;
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private serverService:ServerService) {
+
+openDialog(): void {
+    let dialogRef = this.dialog.open(DialogOverviewExampleDialog1, {
+      width: '400px',
+      data: { name: this.alertstring }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      
+    });
+  }
+  constructor(private serverService:ServerService,public dialog: MatDialog) {
 
     this.serverService.getDivs().subscribe((res)=>{
       
@@ -81,8 +96,14 @@ export class UpdatetaskComponent implements OnInit {
       let myres1 = res.json();
       
       for (let s of myres1){
+ let updatestatus = '';
+        if(s['weeklyupdate'] == "No"){
+          updatestatus = 'Not Updated Yet';
+        }else{
+          updatestatus = 'Updated';
+        }
         this.myres.push({id:s['_id'],taskname:s['taskname'],description:s['description'],progress:s['progress'],taskid:s['_id']});
-        users.push(createNewUser(myind,s['taskname'],s['description'],s['progress'],s['taskid']));
+        users.push(createNewUser(myind,s['taskname'],s['description'],s['progress'],s['taskid'],updatestatus));
         this.dataSource = new MatTableDataSource(users);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -122,7 +143,8 @@ LoadTask(row){
     this.PONumber = thisres['relatedpo']['ponumber'];
     this.POStatus = thisres['relatedpo']['postatus'];
      this.budgetline = thisres['budgetline'];
-    this.actualbudget = thisres['actualbudget'];
+    	this.selected1 = thisres['flag'];
+	this.actualbudget = thisres['actualbudget'];
     this.budgetreserved = thisres['budgetamount'];
     for(let s of thisres['updates']){
       this.lastupdate = s['value'];
@@ -132,9 +154,10 @@ LoadTask(row){
     this.enitiesmodel = [];
     this.entitieshistory = [];
     this.pendingArray = [];
+    let date = new Date();
     for(let i of thisres['effectedentities']){
-      this.myentitiesarray.push({entityname:i['entityname'],entityupdate:i['entityupdate'],entitydueduate:i['entityduedate']});
-      this.enitiesmodel.push({entityname:i['entityname'],entityupdate:i['entityupdate'], entityduedate:i['entityduedate'],updater:localStorage.getItem('userName')});
+      this.myentitiesarray.push({entityname:i['entityname'],entityupdate:i['entityupdate'],entitydueduate:i['entityduedate'],dateofupdate:date.getFullYear() + '-' + (Number(date.getMonth()) + Number(1)) + '-' + date.getDate()});
+      this.enitiesmodel.push({entityname:i['entityname'],entityupdate:i['entityupdate'], entityduedate:i['entityduedate'],updater:localStorage.getItem('userName'),dateofupdate:date.getFullYear() + '-' + (Number(date.getMonth()) + Number(1)) + '-' + date.getDate()});
       console.log("123123123"+this.enitiesmodel[0]['updater']);
       this.entitieshistory.push({entityname:i['entityname'],entityupdate:i['entityupdate'],entityduedate:i['entityduedate']});
     //  alert(this.enitiesmodel[0].entityname);
@@ -155,9 +178,10 @@ LoadTask(row){
   }
 DelegateTo(){
   this.serverService.UpdatePedning(this.Taskid,this.pendingchoice,this.taskdelegate).subscribe((res)=>{
-    alert('Task ' + this.taskdelegate + ' Delgated');
     this.serverService.AddPending(this.Taskid,this.pendingchoice,this.taskdelegate,'').subscribe((res)=>{
-    alert('Task Delegated');
+    
+    this.alertstring = 'A Task has been Delegated';
+    this.openDialog();
     this.serverService.getEmps().subscribe((res)=>{
       console.log(res.json());
         let empJson = res.json();
@@ -180,9 +204,11 @@ DelegateTo(){
   
     let username = localStorage.getItem('userName');
      this.serverService.UpdateTaskHistory(this.Taskid,this.entitieshistory).subscribe((res)=>{
-       alert(this.PONumber);
-      this.serverService.UpdateTaskTracker(this.Taskid,this.progress,this.duedate,this.PRnumber,this.RelatedPO,this.Updatedescription,username,this.enitiesmodel,this.PRStatus,this.PONumber,this.POStatus,this.actualbudget,this.budgetreserved,this.budgetline).subscribe((res)=>{
-alert('Task Updated');
+       
+      this.serverService.UpdateTaskTracker(this.Taskid,this.progress,this.duedate,this.PRnumber,this.RelatedPO,this.Updatedescription,username,this.enitiesmodel,this.PRStatus,this.PONumber,this.POStatus,this.actualbudget,this.budgetreserved,this.budgetline,this.dateofupdate,this.selected1).subscribe((res)=>{
+       this.alertstring = 'Task has been Updated';
+    this.openDialog();
+
 this.serverService.getEmps().subscribe((res)=>{
       console.log(res.json());
         let empJson = res.json();
@@ -220,7 +246,7 @@ interface tasks{
   progress: string,
   taskid : string
 }
-function createNewUser(id: number,taskname: string,taskdescription:string,progress:string, taskid:string): UserData {
+function createNewUser(id: number,taskname: string,taskdescription:string,progress:string, taskid:string, weekly:string): UserData {
   
 
   return {
@@ -228,7 +254,8 @@ function createNewUser(id: number,taskname: string,taskdescription:string,progre
     name: taskname,
     progress: taskdescription,
     color: progress,
-    taskid: taskid
+    taskid: taskid,
+    weekly:weekly
   };
 }
 
@@ -245,6 +272,7 @@ export interface UserData {
   progress: string;
   color: string;
   taskid: string;
+  weekly: string;
 }
 interface employee {
    id:number,
@@ -254,7 +282,8 @@ interface employee {
    entityname:string,
    entityupdate:string,
    updater:string,
-   entityduedate:any
+   entityduedate:any,
+   dateofupdate: any
  }
  interface entity1{
    entityname:string,
@@ -263,3 +292,25 @@ interface employee {
  
  }
 
+
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'dialog-overview-example-dialog.html',
+})
+export class DialogOverviewExampleDialog1 {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog1>,
+    @Inject(MAT_DIALOG_DATA) public data: userdate) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+closeDialog(){
+    this.dialogRef.close();
+  }
+}
+export interface userdate{
+  name: string
+}

@@ -31,6 +31,8 @@ import { UpdatetaskComponent } from './updatetask/updatetask.component';
 import { TaskeditComponent } from './taskedit/taskedit.component';
 import { TasksrecordComponent } from './tasksrecord/tasksrecord.component';
 import { PendingtasksComponent } from './pendingtasks/pendingtasks.component';
+import { DetailComponent } from './detail/detail.component';
+import { DelayedComponent } from './delayed/delayed.component';
 
 @NgModule({
     imports: [

@@ -3,7 +3,53 @@
 </div>
 
 <div class="example-header">
-    <mat-form-field>
+
+<div class="table-responsive">
+	<table style="width:100%">  
+		<tr>
+			<td colspan="50%"> 
+ <mat-form-field>
+
+        <mat-select placeholder="Select Devision To Search" [(ngModel)]="Tasktype" (change)="eventie($event.value)">
+            <mat-option *ngFor="let item of devisionstosearch" value={{item.name}}>{{item.name}}</mat-option>
+	    <mat-option  value="Clear">Clear</mat-option>
+
+        </mat-select>
+
+    </mat-form-field>
+</td>
+
+<td colspan="50%">
+<mat-form-field>
+
+                                            <mat-select style="width: 100%" placeholder="Select Task Type To Filter" [(ngModel)]="Tasktype12" (change)="eventie($event.value)">
+                                                <mat-option value="Task">Task</mat-option>
+                                                <mat-option value="Project">Project</mat-option>
+                                                <mat-option value="Optimization Action">Optimization Action</mat-option>
+                                                <mat-option value="Management Request">Management Request</mat-option>
+                                                <mat-option value="Incident">Incident</mat-option>
+                                                <mat-option value="Audit Risk">Audit Risk</mat-option>
+                                                <mat-option value="Challenge">Challenge</mat-option>
+							 <mat-option value="Clear">Clear</mat-option>
+  
+                                          </mat-select>
+
+                                        </mat-form-field>
+
+</td>
+
+</tr>
+
+<tr>
+<td colspan="100%">
+<hr>
+</td>
+</tr>
+
+
+</table>
+</div>
+	<mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
 </div>
@@ -19,8 +65,13 @@
         </ng-container>
         <!-- Status Column -->
         <ng-container matColumnDef="statuscolor">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Due Status </mat-header-cell>
             <mat-cell *matCellDef="let row"> <img src="{{row.statuscolor}}"> </mat-cell>
+        </ng-container>
+
+<ng-container matColumnDef="flagstatus">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.flag}}</mat-cell>
         </ng-container>
         <!-- Progress Column -->
         <ng-container matColumnDef="progress">
@@ -30,17 +81,18 @@
 
         <!-- Project Name Column -->
         <ng-container matColumnDef="date">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Project Name </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Task Type</mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.name }} </mat-cell>
         </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Task Description </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.test }} </mat-cell>
+<!-- Project Name Column -->
+        <ng-container matColumnDef="pending">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Pending On</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.pending }} </mat-cell>
         </ng-container>
 
-        <!-- Color Column -->
+
+               <!-- Color Column -->
 
         <ng-container matColumnDef="color">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </mat-header-cell>
@@ -88,8 +140,12 @@
         </mat-row>
 
     </mat-table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <mat-paginator [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
+<hr>
+    <mat-progress-bar *ngIf="ispending" class="example-margin" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue">
+    </mat-progress-bar>
+
 <hr>
 <div class="row">
     <div class="col-xs-12">
@@ -196,6 +252,45 @@
                             <td style="padding: 20px">
                                 {{item.updater}}
                             </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" *ngIf="isClicked">
+    <div class="col col-xs-12">
+        <div class="card mb-12">
+            <div class="card-header">
+                Selected Task DueDate History
+            </div>
+            <div class="card-body">
+                <div [@routerTransition]>
+                    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+                </div>
+                <div>
+                    <table style="width:100%" border="1">
+                        <tr style="background: yellow">
+                            <th style="padding: 20px">
+                                DueDate
+                            </th>
+                            <th style="padding: 20px">
+                                Justification
+                            </th>
+
+
+                        </tr>
+                        <tr *ngFor="let item of columns2">
+                            <td style="padding: 20px">
+                                {{item.duedate}}
+                            </td>
+                            <td style="padding: 20px">
+                                {{item.justification}}
+                            </td>
+
                         </tr>
                     </table>
                 </div>

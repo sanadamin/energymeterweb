@@ -1,0 +1,63 @@
+import { ServerService } from './../../dashboard/Server.Service';
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.scss']
+})
+export class SidebarComponent {
+    isActive: boolean = false;
+    showMenu: string = '';
+    isAdmin = false;
+updatetasks = 0;
+myres = [];
+
+constructor(private serverService:ServerService) {
+    console.log(localStorage.getItem('level') );
+   if(localStorage.getItem('level') === 'Admin'){
+       this.isAdmin = true;
+   }
+this.serverService.GetAlltasks().subscribe((res)=>{
+            
+            let s = res.json();
+            for (let i of s){
+              length.push(i['taskname']);
+             this.updatetasks = length.length;
+}
+});
+this.serverService.getempdata(localStorage.getItem('userName')).subscribe((res)=>{
+          
+          let newres = res.json();
+          let employeename = newres['name'];  
+          this.serverService.GetAlltasks1(employeename).subscribe((res)=>{
+          let myres22 = res.json();
+          let myind = 0;
+          for(let j of myres22){
+             this.serverService.GetAlltasks2(j['name']).subscribe((res)=>{
+      let myres1 = res.json();
+      
+      for (let s of myres1){
+        this.myres.push({id:s['_id'],taskname:s['taskname'],description:s['description'],progress:s['progress'],taskid:s['_id']});
+        myind++;
+        
+      }
+      this.updatetasks = this.myres.length;
+    })
+          }
+        });
+      
+        });
+}
+    eventCalled() {
+        this.isActive = !this.isActive;
+    }
+
+    addExpandClass(element: any) {
+        if (element === this.showMenu) {
+            this.showMenu = '0';
+        } else {
+            this.showMenu = element;
+        }
+    }
+}
